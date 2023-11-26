@@ -1,0 +1,17 @@
+name: PlayGround
+main: net.ddns.vcccd.Main
+version: 1.0
+api-version: 1.20
+commands:
+   mobspawn:
+      description: Spawns Albert
+      usage: /<command>
+      permission: albert.spawn
+   zombiespawn:
+      description: Spawns Oswaldo
+      usage: /<command>
+      permission: albert.spawn
+   tim:
+      description: Spawns Tim
+      usage: /<command>
+      permission: albert.spawn
