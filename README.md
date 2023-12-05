@@ -46,7 +46,7 @@ This plugin is open-source and available under the [MIT License](link_to_license
 
 ## Credits
 
-Developed by [Your Name or Organization].
+Developed by Joseph Shumaker.
 
 If you find More Bosses enjoyable, consider supporting the development by [buying me a coffee](link_to_donation_page).
 
