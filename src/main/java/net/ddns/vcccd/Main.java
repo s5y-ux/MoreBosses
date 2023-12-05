@@ -14,10 +14,12 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		
 		//Sends a message to let you know that the plugin was enabled
-		console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lPlayground Plugin Enabled..."));
-		this.getCommand("mobspawn").setExecutor(new MobSpawn());
-		this.getCommand("zombiespawn").setExecutor(new ZombieSpawn());
+		console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lMoreBosses Plugin Enabled..."));
+		this.getCommand("albert").setExecutor(new MobSpawn());
+		this.getCommand("oswaldo").setExecutor(new ZombieSpawn());
 		this.getCommand("tim").setExecutor(new TimmothySpawn());
+		this.getCommand("albertremover").setExecutor(new AlbertStick());
+		this.getCommand("bigboy").setExecutor(new BigBoy());
 		//Registers the class for the damaged entity
 		getServer().getPluginManager().registerEvents(new EventHandlerClass(), this);
 		
