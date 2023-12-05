@@ -24,10 +24,10 @@ Enhance your Minecraft gameplay with the More Bosses plugin, introducing four fo
 
 To spawn these powerful bosses in your Minecraft world, use the following in-game commands:
 
-- `/spawnboss oswaldo`: Summon the formidable Zombie boss, Oswaldo.
-- `/spawnboss tim`: Encounter Tim, the Skeleton on a skeleton horse, and face explosive arrows.
-- `/spawnboss bigboy`: Challenge the massive Giant, Big Boy, who spawns zombie minions.
-- `/spawnboss albert`: Face the never-ending slime, Albert, and tackle an infinite swarm.
+- `/oswaldo`: Summon the formidable Zombie boss, Oswaldo.
+- `/tim`: Encounter Tim, the Skeleton on a skeleton horse, and face explosive arrows.
+- `/bigboy`: Challenge the massive Giant, Big Boy, who spawns zombie minions.
+- `/albert`: Face the never-ending slime, Albert, and tackle an infinite swarm.
 
 ## Installation
 
