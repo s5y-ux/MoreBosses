@@ -42,7 +42,7 @@ Feel free to contribute to the development of More Bosses by forking the reposit
 
 ## License
 
-This plugin is open-source and available under the [MIT License](link_to_license). See the [LICENSE](LICENSE) file for more details.
+This plugin is open-source and available under the [MIT License](https://github.com/s5y-ux/MoreBosses/blob/main/LICENSE). See the [LICENSE](https://github.com/s5y-ux/MoreBosses/blob/main/LICENSE) file for more details.
 
 ## Credits
 
