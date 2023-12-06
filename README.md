@@ -31,14 +31,14 @@ To spawn these powerful bosses in your Minecraft world, use the following in-gam
 
 ## Installation
 
-1. Download the More Bosses plugin JAR file from the [releases](link_to_releases) page.
+1. Download the More Bosses plugin JAR file from the [releases](https://www.spigotmc.org/resources/%E2%9C%A8-morebosses-%E2%9C%A8-new-bosses-custom-effects-custom-items.113837/) page.
 2. Place the JAR file in your Minecraft server's `plugins` folder.
 3. Restart your server to apply the changes.
 4. Configure plugin settings and permissions as needed.
 
 ## Contribution
 
-Feel free to contribute to the development of More Bosses by forking the repository, making improvements, and creating pull requests. Bug reports and feature requests are also welcome in the [issue tracker](link_to_issues).
+Feel free to contribute to the development of More Bosses by forking the repository, making improvements, and creating pull requests. Bug reports and feature requests are also welcome in the [issue tracker](https://github.com/s5y-ux/MoreBosses/issues).
 
 ## License
 
