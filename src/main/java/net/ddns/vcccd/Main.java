@@ -16,11 +16,14 @@ public class Main extends JavaPlugin {
 		//Sends a message to let you know that the plugin was enabled
 		console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lMoreBosses Plugin Enabled..."));
 		this.getCommand("albertremover").setExecutor(new AlbertStick());
-		this.getCommand("morebosses").setExecutor(new GUI());
+		this.getCommand("morebosses").setExecutor(new BossSpawnGUI());
+		this.getCommand("removebars").setExecutor(new BossBars());
 		//Registers the class for the damaged entity
 		getServer().getPluginManager().registerEvents(new EventHandlerClass(), this);
-		getServer().getPluginManager().registerEvents(new GUI(), this);
-		
+		getServer().getPluginManager().registerEvents(new BossSpawnGUI(), this);
+		getServer().getPluginManager().registerEvents(new EntitiesDeathListener(), this);
+		getServer().getPluginManager().registerEvents(new PlayerItemsEvent(), this);
+		getServer().getPluginManager().registerEvents(new BossBars(), this);
 	}
 	
 	@Override

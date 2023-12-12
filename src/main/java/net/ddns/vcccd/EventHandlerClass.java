@@ -43,6 +43,7 @@ public class EventHandlerClass implements Listener {
     public void shotarrow(ProjectileHitEvent event) {
         if (isHoldingBombBow) {
             event.getEntity().getWorld().createExplosion(event.getEntity().getLocation(), 3);
+            isHoldingBombBow = false;
         } else {
         	assert true;
         }
@@ -57,7 +58,7 @@ public class EventHandlerClass implements Listener {
         	assert true;
         }
         
-        else if (ReferenceEntity.getCustomName().equals("501ab6")) {
+        else if (ReferenceEntity.getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"))) {
             if (RNG(6) == 5) {
                 double X, Y, Z;
                 X = ReferenceEntity.getLocation().getX();
