@@ -1,6 +1,7 @@
 # More Bosses Plugin
 
-![More Bosses](https://github.com/s5y-ux/MoreBosses/assets/59636597/dc0f3479-3cc6-447b-b568-1556da178e50)
+![– premium Coffee –](https://github.com/s5y-ux/MoreBosses/assets/59636597/9849605a-90c8-44ed-a706-9a2aa0404648)
+
 
 Enhance your Minecraft gameplay with the More Bosses plugin, introducing four formidable bosses to challenge even the most seasoned adventurers. Dive into epic battles against unique bosses with distinct abilities and mechanics.
 
