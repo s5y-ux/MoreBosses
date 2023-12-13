@@ -24,7 +24,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class BossSpawnGUI implements CommandExecutor, Listener {
 
-    private Inventory bossMenu = Bukkit.createInventory(null, 9, ChatColor.DARK_RED + "Spawn Boss");
+    private Inventory bossMenu = Bukkit.createInventory(null, 9, "Spawn Boss");
 
     private ItemStack createHead(String name, Material headMaterial) {
         ItemStack returnHead = new ItemStack(headMaterial);
@@ -44,13 +44,15 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ItemStack albertHead, oswaldoHead, bigBoyHead, timmothyHead;
-        albertHead = createHead(ChatColor.translateAlternateColorCodes('&', "&e&lAlbert"), Material.SLIME_BLOCK);
-        oswaldoHead = createHead(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"), Material.ZOMBIE_HEAD);
-        bigBoyHead = createHead(ChatColor.BOLD + "Big Boy", Material.GOLD_BLOCK);
-        timmothyHead = createHead(ChatColor.AQUA + "Timmothy", Material.SKELETON_SKULL);
+        ItemStack albertHead, oswaldoHead, bigBoyHead, timmothyHead, bartholomewHead;
+        albertHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lAlbert&4&ki"), Material.SLIME_BLOCK);
+        oswaldoHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lOswaldo&4&ki"), Material.ZOMBIE_HEAD);
+        bigBoyHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBig Boy&4&ki"), Material.GOLD_BLOCK);
+        timmothyHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lTimmothy&4&ki"), Material.SKELETON_SKULL);
+        bartholomewHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBartholomew&4&ki"), Material.WITHER_SKELETON_SKULL);
+        
 
-        ItemStack[] selection = {albertHead, oswaldoHead, bigBoyHead, timmothyHead};
+        ItemStack[] selection = {albertHead, oswaldoHead, bigBoyHead, timmothyHead, bartholomewHead};
         int accumulator = 0;
         for (ItemStack item : selection) {
             bossMenu.setItem(accumulator, item);
@@ -73,14 +75,14 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
             assert true;
 
         } else if (event.getClickedInventory().getSize() == 9) {
-            if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&e&lAlbert"))) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lAlbert&4&ki"))) {
                 player.closeInventory();
                 Slime slime = (Slime) player.getWorld().spawnEntity(playerLocation, EntityType.SLIME);
                 slime.setCustomName(ChatColor.YELLOW + "Albert");
                 slime.setCustomNameVisible(true);
                 slime.setAI(true);
                 
-            } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"))) {
+            } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lOswaldo&4&ki"))) {
                 player.closeInventory();
                 Zombie oswaldo = (Zombie) player.getWorld().spawnEntity(playerLocation, EntityType.ZOMBIE);
                 EntityEquipment equipment = oswaldo.getEquipment();
@@ -100,7 +102,7 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
                 oswaldo.setAI(true);
                 oswaldo.setAdult();
                 
-            } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.BOLD + "Big Boy")) {
+            } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBig Boy&4&ki"))) {
                 player.closeInventory();
                 Giant bigBoy = (Giant) player.getWorld().spawnEntity(playerLocation, EntityType.GIANT);
                 EntityEquipment equipment = bigBoy.getEquipment();
@@ -116,7 +118,7 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
 
                 bigBoy.setCustomName(ChatColor.translateAlternateColorCodes('&', "&c&lBig Boy"));
                 
-            } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.AQUA + "Timmothy")) {
+            } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lTimmothy&4&ki"))) {
                 player.closeInventory();
                 ItemStack bombBow = new ItemStack(Material.BOW);
                 ItemMeta bowDes = bombBow.getItemMeta();
@@ -136,6 +138,9 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
                 equipment.setArmorContents(skeletonArmor);
                 equipment.setItemInMainHand(bombBow);
                 timmothy.setCustomName(ChatColor.AQUA + "Timmothy");
+            } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBartholomew&4&ki"))) {
+            	player.closeInventory();
+            	new bartholomew(player);
             }
         }
     }
