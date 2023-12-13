@@ -1,5 +1,7 @@
 package net.ddns.vcccd;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -25,7 +27,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class BossSpawnGUI implements CommandExecutor, Listener {
 
     private Inventory bossMenu = Bukkit.createInventory(null, 9, "Spawn Boss");
-
+    
+    private void itemLore(ArrayList<String> Lore, ItemStack item) {
+    	ItemMeta temp = item.getItemMeta();
+    	temp.setLore(Lore);
+    	item.setItemMeta(temp);
+    }
+    
     private ItemStack createHead(String name, Material headMaterial) {
         ItemStack returnHead = new ItemStack(headMaterial);
         ItemMeta returnHeadMeta = returnHead.getItemMeta();
@@ -50,13 +58,51 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
         bigBoyHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBig Boy&4&ki"), Material.GOLD_BLOCK);
         timmothyHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lTimmothy&4&ki"), Material.SKELETON_SKULL);
         bartholomewHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBartholomew&4&ki"), Material.WITHER_SKELETON_SKULL);
-        
+
+        // Define lore for each head
+        ArrayList<String> albertLore = new ArrayList<>();
+        albertLore.add(ChatColor.WHITE + "Never-ending slime that");
+        albertLore.add(ChatColor.WHITE + "has to be removed with the Albert Remover...");
+
+        ArrayList<String> oswaldoLore = new ArrayList<>();
+        oswaldoLore.add(ChatColor.WHITE + "Fully netherite zombie that");
+        oswaldoLore.add(ChatColor.WHITE + "summons baby zombie minions...");
+
+        ArrayList<String> timmothyLore = new ArrayList<>();
+        timmothyLore.add(ChatColor.WHITE + "Diamond skeleton that shoots");
+        timmothyLore.add(ChatColor.WHITE + "exploding arrows...");
+
+        ArrayList<String> bartholomewLore = new ArrayList<>();
+        bartholomewLore.add(ChatColor.WHITE + "Wither skeleton that likes");
+        bartholomewLore.add(ChatColor.WHITE + "to fight with effects...");
+
+        ArrayList<String> bigBoyLore = new ArrayList<>();
+        bigBoyLore.add(ChatColor.WHITE + "Big boy that likes");
+        bigBoyLore.add(ChatColor.WHITE + "spawning bigger minions...");
+
+        // Set lore for each head
+        itemLore(albertLore, albertHead);
+        itemLore(oswaldoLore, oswaldoHead);
+        itemLore(bigBoyLore, bigBoyHead);
+        itemLore(timmothyLore, timmothyHead);
+        itemLore(bartholomewLore, bartholomewHead);
 
         ItemStack[] selection = {albertHead, oswaldoHead, bigBoyHead, timmothyHead, bartholomewHead};
         int accumulator = 0;
         for (ItemStack item : selection) {
             bossMenu.setItem(accumulator, item);
             accumulator += 2;
+        }
+        accumulator = 1;
+        
+        ItemStack blank = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+        ItemMeta a = blank.getItemMeta();
+        a.setDisplayName(".");
+        blank.setItemMeta(a);
+        
+        for(int i = 0; i < 4; i++) {
+        	bossMenu.setItem(accumulator, blank);
+        	accumulator = accumulator + 2;
         }
 
         if (sender instanceof Player) {
@@ -141,6 +187,8 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
             } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBartholomew&4&ki"))) {
             	player.closeInventory();
             	new bartholomew(player);
+            } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(".")) {
+            	player.closeInventory();
             }
         }
     }
