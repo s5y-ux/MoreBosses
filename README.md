@@ -3,32 +3,44 @@
 ![– premium Coffee –](https://github.com/s5y-ux/MoreBosses/assets/59636597/9849605a-90c8-44ed-a706-9a2aa0404648)
 
 
-Enhance your Minecraft gameplay with the More Bosses plugin, introducing four formidable bosses to challenge even the most seasoned adventurers. Dive into epic battles against unique bosses with distinct abilities and mechanics.
+Welcome to the More Bosses Minecraft plugin! Enhance your Minecraft experience with five challenging and unique bosses: Oswaldo, Bigboy, Timmothy, Albert, and Bartholomew. Each boss brings its own set of skills, drops custom items, and adds excitement to your gameplay.
 
-## Features
+## Boss Features
 
-- **Oswaldo**: A formidable Zombie adorned in full Netherite armor. Oswaldo can spawn fireballs and minions while occasionally throwing players backward in a mesmerizing circle of particles.
+### Oswaldo
+- A formidable Zombie adorned in full Netherite armor.
+- Spawns minions and launches players back using linear algebra.
+- Drops Oswaldo's Helmet that launches enemies back.
 
-- **Tim**: Mounted on a skeleton horse, Tim is a Skeleton archer that fires exploding arrows at players, adding a explosive challenge to your encounters.
+### Bigboy
+- Similar to Oswaldo but with adult minions.
+- Prepare for a battle against overwhelming odds.
 
-- **Big Boy**: A massive Giant with the ability to spawn zombie minions and deliver powerful knockback attacks. Prepare for a battle against overwhelming odds.
+### Timmothy
+- A Skeleton in full diamond armor.
+- Shoots explosive arrows, adding an explosive challenge to encounters.
+- Drops Timmothy's Exploding Bow.
 
-- **Albert**: Encounter a never-ending slime with Albert. The challenge lies in facing an endless wave of slimy adversaries that never cease to grow.
+### Albert
+- A never-ending slime, designed for comedic relief.
+- Dropping custom items just for fun.
 
-## Advanced Mechanics
+### Bartholomew
+- A Wither Skeleton that fights with potion effects.
+- Drops a sword that makes hit entities levitate.
 
-- **Linear Algebra Integration**: More Bosses utilizes linear algebra to precisely calculate and apply velocities to players during specific boss attacks. Brace yourself for dynamic and strategic movements as you navigate through boss encounters.
+## Commands
 
-- **Transformation Matrices for Particle Effects**: Immerse yourself in visually stunning battles. The plugin employs transformation matrices to spawn particles in captivating circular patterns, enhancing the overall visual appeal of boss encounters.
+- `/morebosses`: Opens the GUI for spawning the bosses.
+- `/removebars`: Removes all boss bars.
+- `/albertremover`: Provides the Albert Remover stick, the only way to remove Albert.
 
-## How to Use
+## Permissions
 
-To spawn these powerful bosses in your Minecraft world, use the following in-game commands:
+- `morebosses.use`: GUI Permission.
+- `morebosses.albertremover`: Albert Remover stick Permission.
+- `morebosses.removebars`: Allows you to remove all boss bars.
 
-- `/oswaldo`: Summon the formidable Zombie boss, Oswaldo.
-- `/tim`: Encounter Tim, the Skeleton on a skeleton horse, and face explosive arrows.
-- `/bigboy`: Challenge the massive Giant, Big Boy, who spawns zombie minions.
-- `/albert`: Face the never-ending slime, Albert, and tackle an infinite swarm.
 
 ## Installation
 
