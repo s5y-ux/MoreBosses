@@ -16,6 +16,8 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.Random;
@@ -59,7 +61,7 @@ public class EventHandlerClass implements Listener {
         }
         
         else if (ReferenceEntity.getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"))) {
-            if (RNG(6) == 5) {
+            if (RNG(4) == 3) {
                 double X, Y, Z;
                 X = ReferenceEntity.getLocation().getX();
                 Y = ReferenceEntity.getLocation().getY();
@@ -86,7 +88,7 @@ public class EventHandlerClass implements Listener {
                 ReferenceEntity.getWorld().spawnEntity(ReferenceEntity.getLocation(), EntityType.FIREBALL);
             }
 
-            if (RNG(6) == 5) {
+            if (RNG(4) == 3) {
                 Zombie Minion = (Zombie) ReferenceEntity.getWorld().spawnEntity(ReferenceEntity.getLocation(), EntityType.ZOMBIE);
                 Minion.setBaby();
                 Minion.setCustomName(ChatColor.translateAlternateColorCodes('&', "&c&lMinion"));
@@ -128,7 +130,7 @@ public class EventHandlerClass implements Listener {
                 }
             }
         }else if (ReferenceEntity.getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lBig Boy"))) {
-            if (RNG(6) == 5) {
+            if (RNG(3) == 2) {
                 double X, Y, Z;
                 X = ReferenceEntity.getLocation().getX();
                 Y = ReferenceEntity.getLocation().getY();
@@ -151,17 +153,19 @@ public class EventHandlerClass implements Listener {
                 }
 
             }
-            if (RNG(6) == 5) {
+            if (RNG(3) == 2) {
                 ReferenceEntity.getWorld().spawnEntity(ReferenceEntity.getLocation(), EntityType.FIREBALL);
             }
 
-            if (RNG(6) == 5) {
+            if (RNG(2) == 1) {
                 Zombie Minion = (Zombie) ReferenceEntity.getWorld().spawnEntity(ReferenceEntity.getLocation(), EntityType.ZOMBIE);               
                 Minion.setCustomName(ChatColor.translateAlternateColorCodes('&', "&c&lMinion"));
                 Minion.setCustomNameVisible(true);
                 EntityEquipment equipment = Minion.getEquipment();
                 equipment.setHelmet(new ItemStack(Material.GOLDEN_HELMET));
                 equipment.setItemInMainHand(new ItemStack(Material.GOLDEN_SWORD));
+                Minion.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 99999999, 3));
+                Minion.setAdult();
             }
         } else {
             assert true;

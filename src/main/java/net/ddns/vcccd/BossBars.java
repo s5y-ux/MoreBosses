@@ -43,17 +43,17 @@ public class BossBars implements CommandExecutor, Listener {
 
             } else if (event.getEntity().getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"))) {
 
-                displayBar(OswaldoBar, event.getEntity(), 20, player);
+                displayBar(OswaldoBar, event.getEntity(), 400, player);
 
             } else if (event.getEntity().getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lBig Boy"))) {
 
-                displayBar(BigBoyBar, event.getEntity(), 100, player);
+                displayBar(BigBoyBar, event.getEntity(), 400, player);
 
             } else if (event.getEntity().getCustomName().equals(ChatColor.AQUA + "Timmothy")) {
-                displayBar(TimmothyBar, event.getEntity(), 20, player);
+                displayBar(TimmothyBar, event.getEntity(), 400, player);
 
             } else if (event.getEntity().getCustomName().equals(ChatColor.BLACK + "Bartholomew")) {
-                displayBar(BartholomewBar, event.getEntity(), 20, player);
+                displayBar(BartholomewBar, event.getEntity(), 400, player);
 
             }
         }

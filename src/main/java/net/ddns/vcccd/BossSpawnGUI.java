@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Giant;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Slime;
@@ -27,6 +28,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class BossSpawnGUI implements CommandExecutor, Listener {
 
     private Inventory bossMenu = Bukkit.createInventory(null, 9, "Spawn Boss");
+    
+    @SuppressWarnings("deprecation")
+	private void healthme(Mob mob, int health) {
+    	mob.setMaxHealth(health);
+    	mob.setHealth(health);
+    }
     
     private void itemLore(ArrayList<String> Lore, ItemStack item) {
     	ItemMeta temp = item.getItemMeta();
@@ -113,7 +120,7 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
         return true;
     }
 
-    @EventHandler
+	@EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         Location playerLocation = player.getLocation();
@@ -147,6 +154,8 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
                 oswaldo.setCustomNameVisible(true);
                 oswaldo.setAI(true);
                 oswaldo.setAdult();
+                healthme(oswaldo, 400);
+                
                 
             } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBig Boy&4&ki"))) {
                 player.closeInventory();
@@ -163,6 +172,8 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
                 equipment.setItemInMainHand(new ItemStack(Material.TRIDENT));
 
                 bigBoy.setCustomName(ChatColor.translateAlternateColorCodes('&', "&c&lBig Boy"));
+                bigBoy.setAI(true);
+                healthme(bigBoy, 400);
                 
             } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lTimmothy&4&ki"))) {
                 player.closeInventory();
@@ -184,6 +195,7 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
                 equipment.setArmorContents(skeletonArmor);
                 equipment.setItemInMainHand(bombBow);
                 timmothy.setCustomName(ChatColor.AQUA + "Timmothy");
+                healthme(timmothy, 400);
             } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBartholomew&4&ki"))) {
             	player.closeInventory();
             	new bartholomew(player);
