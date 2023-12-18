@@ -25,6 +25,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerItemsEvent(), this);
 		getServer().getPluginManager().registerEvents(new BossBars(), this);
 		getServer().getPluginManager().registerEvents(new bartholomewListener(), this);
+		getServer().getPluginManager().registerEvents(new UpdateChecker(), this);
 	}
 	
 	@Override
