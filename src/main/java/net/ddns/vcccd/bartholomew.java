@@ -19,7 +19,7 @@ public class bartholomew {
 	private WitherSkeleton Bartholomew;
     
 	@SuppressWarnings("deprecation")
-	public bartholomew(Player player) {
+	public bartholomew(Player player, int health) {
 		Bartholomew = (WitherSkeleton) player.getWorld().spawnEntity(player.getLocation(), EntityType.WITHER_SKELETON);
 		Bartholomew.getEquipment().setArmorContents(bartholomewArmor);
 		
@@ -29,8 +29,8 @@ public class bartholomew {
 		
 		//Setting the effects
 		Bartholomew.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 99999999, 2));
-		Bartholomew.setMaxHealth(400);
-		Bartholomew.setHealth(400);
+		Bartholomew.setMaxHealth(health);
+		Bartholomew.setHealth(health);
 	}
 	
 	//Accessor for grabbing Bartholomew

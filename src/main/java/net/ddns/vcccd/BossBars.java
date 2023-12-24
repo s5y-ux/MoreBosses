@@ -8,6 +8,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
@@ -22,7 +23,8 @@ public class BossBars implements CommandExecutor, Listener {
     private BossBar BigBoyBar = Bukkit.createBossBar(ChatColor.BOLD + "Big Boy", BarColor.WHITE, BarStyle.SOLID);
     private BossBar TimmothyBar = Bukkit.createBossBar(ChatColor.AQUA + "Timmothy", BarColor.BLUE, BarStyle.SOLID);
     private BossBar BartholomewBar = Bukkit.createBossBar(ChatColor.BLACK + "Bartholomew", BarColor.PURPLE, BarStyle.SOLID);
-
+    private final Main main;
+    
     private void displayBar(BossBar Bar, Entity entity, int maxHealth, Player player) {
         Mob mob = (Mob) entity;
         Bar.addPlayer(player);
@@ -30,6 +32,10 @@ public class BossBars implements CommandExecutor, Listener {
         Bar.setVisible(true);
     }
 
+    public BossBars(Main main) {
+    this.main = main;	
+    }
+    
     @EventHandler
     public void EntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity().getCustomName() == null) {
@@ -37,23 +43,24 @@ public class BossBars implements CommandExecutor, Listener {
         } else {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
+            FileConfiguration config = main.getConfig();
 
             if (event.getEntity().getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&eAlbert"))) {
                 displayBar(AlbertBar, event.getEntity(), 16, player);
 
             } else if (event.getEntity().getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"))) {
 
-                displayBar(OswaldoBar, event.getEntity(), 400, player);
+                displayBar(OswaldoBar, event.getEntity(), config.getInt("OswaldoHealth"), player);
 
             } else if (event.getEntity().getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lBig Boy"))) {
 
-                displayBar(BigBoyBar, event.getEntity(), 400, player);
+                displayBar(BigBoyBar, event.getEntity(), config.getInt("BigBoyHealth"), player);
 
             } else if (event.getEntity().getCustomName().equals(ChatColor.AQUA + "Timmothy")) {
-                displayBar(TimmothyBar, event.getEntity(), 400, player);
+                displayBar(TimmothyBar, event.getEntity(), config.getInt("TimmothyHealth"), player);
 
             } else if (event.getEntity().getCustomName().equals(ChatColor.BLACK + "Bartholomew")) {
-                displayBar(BartholomewBar, event.getEntity(), 400, player);
+                displayBar(BartholomewBar, event.getEntity(), config.getInt("BartholomewHealth"), player);
 
             }
         }
