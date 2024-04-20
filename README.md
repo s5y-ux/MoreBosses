@@ -2,12 +2,13 @@
 
 ![– premium Coffee –](https://github.com/s5y-ux/MoreBosses/assets/59636597/9849605a-90c8-44ed-a706-9a2aa0404648)
 
-Welcome to the More Bosses Minecraft plugin! Enhance your Minecraft experience with five challenging and unique bosses: Oswaldo, Bigboy, Timmothy, Albert, and Bartholomew. Each boss brings its own set of skills, drops custom items, and adds excitement to your gameplay.
-
 ![Paper Version](https://img.shields.io/badge/Paper-1.20%2B-white)
 ![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20%2B-brightgreen)
 ![Java Version](https://img.shields.io/badge/Java-19-orange)
 ![License](https://img.shields.io/badge/License-MIT-blue)
+
+Welcome to the More Bosses Minecraft plugin! Enhance your Minecraft experience with five challenging and unique bosses: Oswaldo, Bigboy, Timmothy, Albert, and Bartholomew. Each boss brings its own set of skills, drops custom items, and adds excitement to your gameplay.
+
 ## Boss Features
 
 ### Oswaldo
