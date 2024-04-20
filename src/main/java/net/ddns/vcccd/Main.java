@@ -11,7 +11,7 @@ public class Main extends JavaPlugin {
 	ConsoleCommandSender console = getServer().getConsoleSender();
 	
 	public void message() {
-		console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c  __  __ ____  \n"
+		console.sendMessage(ChatColor.translateAlternateColorCodes('&', "\n&c  __  __ ____  \n"
 				+ " |  \\/  |  _ \\ \n"
 				+ " | \\  / | |_) |\n"
 				+ " | |\\/| |  _ < \n"

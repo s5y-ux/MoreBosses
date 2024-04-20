@@ -1,66 +1,65 @@
 package net.ddns.vcccd;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
-
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
 
 /**
 * Created by EncryptDev
 */
 public class UpdateChecker implements Listener {
+	
+	private String GameVersion = "1.3.2";
+	private String Version = constructData();
 
-    private String url = "https://api.spigotmc.org/legacy/update.php?resource=";
-    private String id = "113837";
+    //Used to construct the JSON data for the rest of the class
+    private String constructData(){
 
-    private boolean isAvailable;
-
-    public UpdateChecker() {
-
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    @EventHandler
-    public void on(PlayerJoinEvent event) {
-        if(event.getPlayer().isOp())
-            if(isAvailable)
-                event.getPlayer().sendMessage("Update available message");
-    }
-
-    public void check() {
-        isAvailable = checkUpdate();
-    }
-
-    private boolean checkUpdate() {
+        //Exception Handling for API
         try {
-            String localVersion = "1.2.1";
-            HttpsURLConnection connection = (HttpsURLConnection) new URL(url + id).openConnection();
-            connection.setRequestMethod("GET");
-            String raw = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
 
-            String remoteVersion;
-            if(raw.contains("-")) {
-                remoteVersion = raw.split("-")[0].trim();
-            } else {
-                remoteVersion = raw;
+            //API URL for JSON data on Crypto
+            URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=113837");
+
+            //Creates the connection and sends a GET request
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            //Response is read and stored in a String Builder object reading the lines in the Buffer
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
             }
 
-            if(!localVersion.equalsIgnoreCase(remoteVersion))
-                return true;
+            //Closes the reader and Parses the JSON response
+            reader.close();
+            
+            return (response.toString());
 
-        } catch (IOException e) {
-            return false;
+        } catch (Exception e) {
+
+            //Otherwise, we can just send an error to the server console
+            return (null);
         }
-        return false;
+    }
+    
+    @EventHandler
+    public void on(PlayerJoinEvent event) {
+        if(event.getPlayer().isOp()) {
+            if(!this.Version.equals(this.GameVersion)) {
+            	event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&fUpdate Avaliable for more [&eMoreBosses&f]"));
+            	event.getPlayer().sendMessage("Your version -> " + ChatColor.YELLOW + GameVersion + ChatColor.WHITE + " Latest Version -> " + ChatColor.YELLOW + Version);
+            }
+        }
     }
 
 }

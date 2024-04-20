@@ -10,18 +10,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Giant;
-import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Slime;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,11 +25,6 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
     private Inventory bossMenu = Bukkit.createInventory(null, 9, "Spawn Boss");
     private final Main main;
     
-    @SuppressWarnings("deprecation")
-	private void healthme(Mob mob, int health) {
-    	mob.setMaxHealth(health);
-    	mob.setHealth(health);
-    }
     
     private void itemLore(ArrayList<String> Lore, ItemStack item) {
     	ItemMeta temp = item.getItemMeta();
@@ -49,14 +38,6 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
         returnHeadMeta.setDisplayName(name);
         returnHead.setItemMeta(returnHeadMeta);
         return returnHead;
-    }
-
-    private ItemStack createEnchantedItem(Material armor, Enchantment enchant, int level) {
-        ItemStack returnArmor = new ItemStack(armor);
-        ItemMeta armorMeta = returnArmor.getItemMeta();
-        armorMeta.addEnchant(enchant, level, true);
-        returnArmor.setItemMeta(armorMeta);
-        return returnArmor;
     }
     
     public BossSpawnGUI(Main main) {
@@ -143,68 +124,20 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
                 
             } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lOswaldo&4&ki"))) {
                 player.closeInventory();
-                Zombie oswaldo = (Zombie) player.getWorld().spawnEntity(playerLocation, EntityType.ZOMBIE);
-                EntityEquipment equipment = oswaldo.getEquipment();
-
-                ItemStack[] zombieArmor = {
-                        new ItemStack(Material.NETHERITE_BOOTS),
-                        new ItemStack(Material.NETHERITE_LEGGINGS),
-                        new ItemStack(Material.NETHERITE_CHESTPLATE),
-                        new ItemStack(Material.NETHERITE_HELMET)
-                };
-
-                equipment.setArmorContents(zombieArmor);
-                equipment.setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
-
-                oswaldo.setCustomName(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"));
-                oswaldo.setCustomNameVisible(true);
-                oswaldo.setAI(true);
-                oswaldo.setAdult();
-                healthme(oswaldo, config.getInt("OswaldoHealth"));
-                
+                new Oswaldo(config.getInt("OswaldoHealth"), player.getLocation(), player.getWorld());      
                 
             } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBig Boy&4&ki"))) {
                 player.closeInventory();
-                Giant bigBoy = (Giant) player.getWorld().spawnEntity(playerLocation, EntityType.GIANT);
-                EntityEquipment equipment = bigBoy.getEquipment();
-                
-                ItemStack[] zombieArmor = {
-                        new ItemStack(Material.GOLDEN_BOOTS),
-                        new ItemStack(Material.GOLDEN_LEGGINGS),
-                        new ItemStack(Material.GOLDEN_CHESTPLATE),
-                        new ItemStack(Material.GOLDEN_HELMET)
-                };
-                equipment.setArmorContents(zombieArmor);
-                equipment.setItemInMainHand(new ItemStack(Material.TRIDENT));
-
-                bigBoy.setCustomName(ChatColor.translateAlternateColorCodes('&', "&c&lBig Boy"));
-                bigBoy.setAI(true);
-                healthme(bigBoy, config.getInt("BigBoyHealth"));
+                new BigBoy(config.getInt("BigBoyHealth"), player.getLocation(), player.getWorld());
                 
             } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lTimmothy&4&ki"))) {
                 player.closeInventory();
-                ItemStack bombBow = new ItemStack(Material.BOW);
-                ItemMeta bowDes = bombBow.getItemMeta();
-                bowDes.setDisplayName(ChatColor.RED + "BomBow");
-                bombBow.setItemMeta(bowDes);
-
-                Skeleton timmothy = (Skeleton) player.getWorld().spawnEntity(playerLocation, EntityType.SKELETON);
-                EntityEquipment equipment = timmothy.getEquipment();
+                new Timmothy(config.getInt("TimmothyHealth"), player.getLocation(), player.getWorld());
                 
-                ItemStack[] skeletonArmor = {
-                		createEnchantedItem(Material.DIAMOND_BOOTS, Enchantment.PROTECTION_EXPLOSIONS, 999),
-                        createEnchantedItem(Material.DIAMOND_LEGGINGS, Enchantment.PROTECTION_EXPLOSIONS, 999),
-                        createEnchantedItem(Material.DIAMOND_CHESTPLATE, Enchantment.PROTECTION_EXPLOSIONS, 999),
-                        createEnchantedItem(Material.DIAMOND_HELMET, Enchantment.PROTECTION_EXPLOSIONS, 999)
-                };
-                
-                equipment.setArmorContents(skeletonArmor);
-                equipment.setItemInMainHand(bombBow);
-                timmothy.setCustomName(ChatColor.AQUA + "Timmothy");
-                healthme(timmothy, config.getInt("TimmothyHealth"));
             } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBartholomew&4&ki"))) {
             	player.closeInventory();
             	new bartholomew(player, config.getInt("BartholomewHealth"));
+            	
             } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.BLACK + ".")) {
             	player.closeInventory();
             }
