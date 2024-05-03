@@ -1,3 +1,16 @@
+#Change this to true if you want the bosses to spawn in the world.
+SpawnInWorld: false
+
+#The chance out of 4 of a boss spawning
+SpawnRNG: 500
+
+#Options for which bosses spawn in the world (MUST SET SpawnInWorld TO TRUE!)
+OswaldoSpawn: true
+BigBoySpawn: false
+TimmothySpawn: false
+BartholomewSpawn: true
+
+#Sets the health of the different bosses.
 OswaldoHealth: 300
 BigBoyHealth: 300
 TimmothyHealth: 300

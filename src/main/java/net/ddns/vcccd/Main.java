@@ -33,6 +33,12 @@ public class Main extends JavaPlugin {
 		config.addDefault("BigBoyHealth", 300);
 		config.addDefault("TimmothyHealth", 300);
 		config.addDefault("BartholomewHealth", 300);
+		config.addDefault("SpawnRNG", 500);
+		config.addDefault("SpawnInWorld", false);
+		config.addDefault("OswaldoSpawn", true);
+		config.addDefault("BigBoySpawn", false);
+		config.addDefault("TimmothySpawn", false);
+		config.addDefault("BartholomewSpawn", false);
 		
 		this.saveDefaultConfig();
 		
@@ -50,6 +56,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new UpdateChecker(), this);
 		getServer().getPluginManager().registerEvents(new AdminSword(), this);
 		getServer().getPluginManager().registerEvents(new TridentListener(), this);
+		getServer().getPluginManager().registerEvents(new BossSpawn(this), this);
 	}
 	
 	@Override

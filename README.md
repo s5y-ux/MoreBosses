@@ -1,8 +1,4 @@
 # More Bosses Plugin
-![Paper Version](https://img.shields.io/badge/Paper-1.20%2B-white)
-![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20%2B-brightgreen)
-![Java Version](https://img.shields.io/badge/Java-19-orange)
-![License](https://img.shields.io/badge/License-MIT-blue)
 
 ![– premium Coffee –](https://github.com/s5y-ux/MoreBosses/assets/59636597/9849605a-90c8-44ed-a706-9a2aa0404648)
 
@@ -47,7 +43,7 @@ Welcome to the More Bosses Minecraft plugin! Enhance your Minecraft experience w
 
 ## Installation
 
-1. Download the More Bosses plugin JAR file from the [releases](https://github.com/s5y-ux/MoreBosses/releases) page.
+1. Download the More Bosses plugin JAR file from the [releases](https://www.spigotmc.org/resources/%E2%9C%A8-morebosses-%E2%9C%A8-new-bosses-custom-effects-custom-items.113837/) page.
 2. Place the JAR file in your Minecraft server's `plugins` folder.
 3. Restart your server to apply the changes.
 4. Configure plugin settings and permissions as needed.
