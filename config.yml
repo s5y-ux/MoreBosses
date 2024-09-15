@@ -9,9 +9,18 @@ OswaldoSpawn: true
 BigBoySpawn: false
 TimmothySpawn: false
 BartholomewSpawn: true
+PiggySpawn: true
+GortSpawn: true
+DrStrangeSpawn: true
 
 #Sets the health of the different bosses.
 OswaldoHealth: 300
 BigBoyHealth: 300
 TimmothyHealth: 300
 BartholomewHealth: 300
+PiggyHealth: 300
+GortHealth: 300
+DrStrangeHealth: 300
+
+#Display ASCII art when the plugin enables
+DisplayAscii: true

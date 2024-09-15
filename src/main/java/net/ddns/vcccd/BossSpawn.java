@@ -56,7 +56,22 @@ public class BossSpawn implements Listener {
 	        	break;
 	        case 4:
 	        	if(this.config.getBoolean("BartholomewSpawn")) {
-	        		new Timmothy(this.config.getInt("BartholomewHealth"), spawnLocation, chunkWorld);
+	        		new bartholomew(this.config.getInt("BartholomewHealth"), spawnLocation, chunkWorld);
+	        	}
+	        	break;
+	        case 5:
+	        	if(this.config.getBoolean("PiggySpawn")) {
+	        		new Piggy(this.config.getInt("PiggyHealth"), spawnLocation, chunkWorld);
+	        	}
+	        	break;
+	        case 6:
+	        	if(this.config.getBoolean("GortSpawn")) {
+	        		new VinNumber(this.config.getInt("GortHealth"), spawnLocation, chunkWorld);
+	        	}
+	        	break;
+	        case 7:
+	        	if(this.config.getBoolean("DrStrangeSpawn")) {
+	        		new DrStrange(this.config.getInt("DrStrangeHealth"), spawnLocation, chunkWorld);
 	        	}
 	        	break;
 	        default:

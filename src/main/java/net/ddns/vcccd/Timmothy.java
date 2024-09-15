@@ -31,10 +31,10 @@ public class Timmothy {
         EntityEquipment equipment = timmothy.getEquipment();
         
         ItemStack[] skeletonArmor = {
-        		createEnchantedItem(Material.DIAMOND_BOOTS, Enchantment.PROTECTION_EXPLOSIONS, 999),
-                createEnchantedItem(Material.DIAMOND_LEGGINGS, Enchantment.PROTECTION_EXPLOSIONS, 999),
-                createEnchantedItem(Material.DIAMOND_CHESTPLATE, Enchantment.PROTECTION_EXPLOSIONS, 999),
-                createEnchantedItem(Material.DIAMOND_HELMET, Enchantment.PROTECTION_EXPLOSIONS, 999)
+        		createEnchantedItem(Material.DIAMOND_BOOTS, Enchantment.BLAST_PROTECTION, 999),
+                createEnchantedItem(Material.DIAMOND_LEGGINGS, Enchantment.BLAST_PROTECTION, 999),
+                createEnchantedItem(Material.DIAMOND_CHESTPLATE, Enchantment.BLAST_PROTECTION, 999),
+                createEnchantedItem(Material.DIAMOND_HELMET, Enchantment.BLAST_PROTECTION, 999)
         };
         
         equipment.setArmorContents(skeletonArmor);

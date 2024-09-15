@@ -23,10 +23,6 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		
-		//Sends a message to let you know that the plugin was enabled
-		message();
-		console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lMoreBosses Plugin Enabled..."));
-		
 		FileConfiguration config = this.getConfig();
 		
 		config.addDefault("OswaldoHealth", 300);
@@ -34,11 +30,18 @@ public class Main extends JavaPlugin {
 		config.addDefault("TimmothyHealth", 300);
 		config.addDefault("BartholomewHealth", 300);
 		config.addDefault("SpawnRNG", 500);
+		config.addDefault("PiggyHealth", 300);
+		config.addDefault("GortHealth", 300);
+		config.addDefault("DrStrangeHealth",  300);
 		config.addDefault("SpawnInWorld", false);
 		config.addDefault("OswaldoSpawn", true);
 		config.addDefault("BigBoySpawn", false);
 		config.addDefault("TimmothySpawn", false);
 		config.addDefault("BartholomewSpawn", false);
+		config.addDefault("DisplayAscii", true);
+		config.addDefault("PiggySpawn", true);
+		config.addDefault("GortSpawn", true);
+		config.addDefault("DrStrangeSpawn", true);
 		
 		this.saveDefaultConfig();
 		
@@ -46,6 +49,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("morebosses").setExecutor(new BossSpawnGUI(this));
 		this.getCommand("removebars").setExecutor(new BossBars(this));
 		this.getCommand("adminsword").setExecutor(new AdminSword());
+		this.getCommand("spawnboss").setExecutor(new SpawnBossCommand(this));
 		//Registers the class for the damaged entity
 		getServer().getPluginManager().registerEvents(new EventHandlerClass(), this);
 		getServer().getPluginManager().registerEvents(new BossSpawnGUI(this), this);
@@ -57,6 +61,15 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new AdminSword(), this);
 		getServer().getPluginManager().registerEvents(new TridentListener(), this);
 		getServer().getPluginManager().registerEvents(new BossSpawn(this), this);
+		getServer().getPluginManager().registerEvents(new ListenToAxe(), this);
+		
+		if(this.getConfig().getBoolean("DisplayAscii") == true) {
+			//Sends a message to let you know that the plugin was enabled
+			message();
+		}
+		
+		console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lMoreBosses Plugin Enabled..."));
+		
 	}
 	
 	@Override

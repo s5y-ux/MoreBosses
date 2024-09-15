@@ -1,6 +1,6 @@
 name: MoreBosses
 main: net.ddns.vcccd.Main
-version: 1.4.0
+version: 2.0.1
 api-version: 1.20
 commands:
    albertremover:
@@ -19,3 +19,7 @@ commands:
       description: Allows you to kill anything
       usage: /<command>
       permission: morebosses.adminsword
+   spawnboss:
+      description: Spawns boss with command
+      usage: /<command> <boss>
+      permission: morebosses.spawncommand

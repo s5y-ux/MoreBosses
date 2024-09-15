@@ -22,7 +22,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class BossSpawnGUI implements CommandExecutor, Listener {
 
-    private Inventory bossMenu = Bukkit.createInventory(null, 9, "Spawn Boss");
+    private Inventory bossMenu = Bukkit.createInventory(null, 18, "Spawn Boss");
     private final Main main;
     
     
@@ -45,13 +45,16 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ItemStack albertHead, oswaldoHead, bigBoyHead, timmothyHead, bartholomewHead;
+        ItemStack albertHead, oswaldoHead, bigBoyHead, timmothyHead, bartholomewHead, piggyHead, vinHead, strangeHead;
         albertHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lAlbert&4&ki"), Material.SLIME_BLOCK);
         oswaldoHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lOswaldo&4&ki"), Material.ZOMBIE_HEAD);
         bigBoyHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBig Boy&4&ki"), Material.GOLD_BLOCK);
         timmothyHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lTimmothy&4&ki"), Material.SKELETON_SKULL);
         bartholomewHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lBartholomew&4&ki"), Material.WITHER_SKELETON_SKULL);
-
+        piggyHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lPiggy&4&ki"), Material.PIGLIN_HEAD);
+        vinHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lGort&4&ki"), Material.VINDICATOR_SPAWN_EGG);
+        strangeHead = createHead(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lDr. Strange&4&ki"), Material.ENDER_PEARL);
+        
         // Define lore for each head
         ArrayList<String> albertLore = new ArrayList<>();
         albertLore.add(ChatColor.WHITE + "Never-ending slime that");
@@ -72,6 +75,18 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
         ArrayList<String> bigBoyLore = new ArrayList<>();
         bigBoyLore.add(ChatColor.WHITE + "Big boy that likes");
         bigBoyLore.add(ChatColor.WHITE + "spawning bigger minions...");
+        
+        ArrayList<String> piggyLore = new ArrayList<>();
+        piggyLore.add(ChatColor.WHITE + "Big bad piggy");
+        piggyLore.add(ChatColor.WHITE + "Will throw you around...");
+        
+        ArrayList<String> vinLore = new ArrayList<>();
+        vinLore.add(ChatColor.WHITE + "Rude serf who no longer");
+        vinLore.add(ChatColor.WHITE + "Puts up with his lord...");
+        
+        ArrayList<String> strangeLore = new ArrayList<>();
+        strangeLore.add(ChatColor.WHITE + "An Enderman");
+        strangeLore.add(ChatColor.WHITE + "Who mastered space travel...");
 
         // Set lore for each head
         itemLore(albertLore, albertHead);
@@ -79,6 +94,9 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
         itemLore(bigBoyLore, bigBoyHead);
         itemLore(timmothyLore, timmothyHead);
         itemLore(bartholomewLore, bartholomewHead);
+        itemLore(piggyLore, piggyHead);
+        itemLore(vinLore, vinHead);
+        itemLore(strangeLore, strangeHead);
 
         ItemStack[] selection = {albertHead, oswaldoHead, bigBoyHead, timmothyHead, bartholomewHead};
         int accumulator = 0;
@@ -97,7 +115,16 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
         	bossMenu.setItem(accumulator, blank);
         	accumulator = accumulator + 2;
         }
-
+        bossMenu.setItem(10, piggyHead);
+        bossMenu.setItem(13, vinHead);
+        bossMenu.setItem(16, strangeHead);
+        bossMenu.setItem(9, blank);
+        bossMenu.setItem(11, blank);
+        bossMenu.setItem(12, blank);
+        bossMenu.setItem(14, blank);
+        bossMenu.setItem(15, blank);
+        bossMenu.setItem(17, blank);
+        
         if (sender instanceof Player) {
             Player player = (Player) sender;
             player.openInventory(bossMenu);
@@ -114,7 +141,7 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
         if (event.getCurrentItem() == null) {
             assert true;
 
-        } else if (event.getClickedInventory().getSize() == 9) {
+        } else if (event.getClickedInventory().getSize() == 18) {
             if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lAlbert&4&ki"))) {
                 player.closeInventory();
                 Slime slime = (Slime) player.getWorld().spawnEntity(playerLocation, EntityType.SLIME);
@@ -138,7 +165,17 @@ public class BossSpawnGUI implements CommandExecutor, Listener {
             	player.closeInventory();
             	new bartholomew(player, config.getInt("BartholomewHealth"));
             	
-            } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.BLACK + ".")) {
+            } else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lPiggy&4&ki"))) {
+            	player.closeInventory();
+            	new Piggy(player, config.getInt("PiggyHealth"));
+            } else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lGort&4&ki"))) {
+            	player.closeInventory();
+            	new VinNumber(player, config.getInt("GortHealth"));
+            } else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&4&ki&c&lDr. Strange&4&ki"))) {
+            	player.closeInventory();
+            	new DrStrange(player, config.getInt("DrStrangeHealth"));
+            }
+            else if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.BLACK + ".")) {
             	player.closeInventory();
             }
         }

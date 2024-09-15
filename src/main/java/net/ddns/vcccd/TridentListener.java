@@ -24,7 +24,7 @@ public class TridentListener implements Listener{
 		
 		//We also want to spawn a stream of particles in the face of the player
 		
-		Particle Lazer = Particle.VILLAGER_HAPPY;
+		Particle Lazer = Particle.HAPPY_VILLAGER;
 		
 		for (int i = 1; i < 400; i++) {
 			

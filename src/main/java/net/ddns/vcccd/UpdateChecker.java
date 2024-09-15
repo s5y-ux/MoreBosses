@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 */
 public class UpdateChecker implements Listener {
 	
-	private String GameVersion = "1.4.0";
+	private String GameVersion = "2.0.1";
 	private String Version = constructData();
 
     //Used to construct the JSON data for the rest of the class
@@ -56,7 +56,7 @@ public class UpdateChecker implements Listener {
     public void on(PlayerJoinEvent event) {
         if(event.getPlayer().isOp()) {
             if(!this.Version.equals(this.GameVersion)) {
-            	event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&fUpdate Avaliable for more [&eMoreBosses&f]"));
+            	event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&fUpdate Avaliable for [&eMoreBosses&f]"));
             	event.getPlayer().sendMessage("Your version -> " + ChatColor.YELLOW + GameVersion + ChatColor.WHITE + " Latest Version -> " + ChatColor.YELLOW + Version);
             }
         }

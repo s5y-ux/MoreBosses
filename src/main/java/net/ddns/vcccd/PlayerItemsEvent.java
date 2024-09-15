@@ -35,7 +35,7 @@ public class PlayerItemsEvent implements Listener {
 				for (int i = 0; i < 360; i = i + 6) {
                     double Xoffset = 4 * Math.cos(Math.toRadians(i));
                     double Yoffset = 4 * Math.sin(Math.toRadians(i));
-                    ReferenceEntity.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, X + Xoffset, Y, Z + Yoffset, 1);
+                    ReferenceEntity.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, X + Xoffset, Y, Z + Yoffset, 1);
                     ReferenceEntity.getWorld().spawnParticle(Particle.LAVA, X + Xoffset, Y, Z + Yoffset, 1);
                 }
 				
