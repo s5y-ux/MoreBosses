@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 */
 public class UpdateChecker implements Listener {
 	
-	private String GameVersion = "2.0.1";
+	private String GameVersion = "2.0.3";
 	private String Version = constructData();
 
     //Used to construct the JSON data for the rest of the class

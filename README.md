@@ -1,6 +1,6 @@
 # More Bosses Plugin
 
-![DALL·E 2024-11-10 22 41 13 - A logo for a Minecraft Spigot plugin titled 'Morebosses'  The design should reflect a fantasy theme with a powerful and mysterious aesthetic, incorpor](https://github.com/user-attachments/assets/a750bf9f-6d59-421d-af94-14c6ebe694c4)
+![– premium Coffee –](https://github.com/s5y-ux/MoreBosses/assets/59636597/9849605a-90c8-44ed-a706-9a2aa0404648)
 
 Welcome to the More Bosses Minecraft plugin! Enhance your Minecraft experience with five challenging and unique bosses: Oswaldo, Bigboy, Timmothy, Albert, and Bartholomew. Each boss brings its own set of skills, drops custom items, and adds excitement to your gameplay.
 

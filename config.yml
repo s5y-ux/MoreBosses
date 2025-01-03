@@ -1,6 +1,9 @@
 #Change this to true if you want the bosses to spawn in the world.
 SpawnInWorld: false
 
+#Worlds to spawn in (must be seperated by commas and no spaces)
+Worlds: world,city
+
 #The chance out of 4 of a boss spawning
 SpawnRNG: 500
 

@@ -42,6 +42,7 @@ public class Main extends JavaPlugin {
 		config.addDefault("PiggySpawn", true);
 		config.addDefault("GortSpawn", true);
 		config.addDefault("DrStrangeSpawn", true);
+		config.addDefault("Worlds", "world,city");
 		
 		this.saveDefaultConfig();
 		
