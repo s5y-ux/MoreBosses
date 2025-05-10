@@ -11,10 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-
-/**
-* Created by EncryptDev
-*/
 public class UpdateChecker implements Listener {
 	
 	private String GameVersion = "2.0.9";
