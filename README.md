@@ -12,6 +12,11 @@
 - **Tim**: A Skeleton archer riding a skeleton horse. Fires exploding arrows for high-stakes encounters.
 - **Big Boy**: A Giant that spawns zombie minions and dishes out heavy knockback. Face him at your own risk.
 - **Albert**: An infinite slime challenge — Albert never stops multiplying, pushing your survival to the limit.
+- **Bartholomew**: A wither skeleton who fights with powerful potion effects. Be prepared for chaos.
+- **Piggy**: A wild pig boss that tosses players around like toys. Not your average farm animal.
+- **Gort**: A rebellious Vindicator tired of servitude — expect brute force and aggression.
+- **Dr. Strange**: A teleporting Enderman who has mastered space travel. Blink, and he's somewhere else.
+
 
 ## 📐 Technical Features
 
