@@ -1,0 +1,36 @@
+# Change this to true if you want the bosses to spawn in the world.
+SpawnInWorld: false
+
+# Worlds to spawn in (must be separated by commas and no spaces)
+Worlds: world,city
+
+# The higher the number, the less of a chance for a boss to spawn in the world
+SpawnRNG: 500
+
+# Options for which bosses spawn in the world (MUST SET SpawnInWorld TO TRUE!)
+OswaldoSpawn: true
+BigBoySpawn: false
+TimmothySpawn: false
+BartholomewSpawn: true
+PiggySpawn: true
+GortSpawn: true
+DrStrangeSpawn: true
+
+# Options for which bosses de-spawn in world
+OswaldoDeSpawn: true
+BigBoyDeSpawn: false
+TimmothyDeSpawn: false
+BartholomewDeSpawn: true
+PiggyDeSpawn: true
+GortDeSpawn: true
+DrStrangeDeSpawn: true
+
+# Sets the health of the different bosses.
+OswaldoHealth: 300
+BigBoyHealth: 300
+TimmothyHealth: 300
+BartholomewHealth: 300
+PiggyHealth: 300
+GortHealth: 300
+DrStrangeHealth: 300
+
