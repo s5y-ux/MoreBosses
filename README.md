@@ -1,3 +1,5 @@
+![More-Bosses-5-9-2025](https://github.com/user-attachments/assets/c877ad7d-e2bd-4eb7-b030-4b37e275efca)
+
 ## 🎥 Videos
 
 - [Oswaldo Showcase](https://www.youtube.com/watch?v=f3znyvnmU6U)
