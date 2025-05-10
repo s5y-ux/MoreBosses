@@ -16,7 +16,7 @@ PiggySpawn: true
 GortSpawn: true
 DrStrangeSpawn: true
 
-# Options for which bosses de-spawn in world
+# Options for which bosses de-spawn in worlds selected
 OswaldoDeSpawn: true
 BigBoyDeSpawn: false
 TimmothyDeSpawn: false
@@ -25,7 +25,7 @@ PiggyDeSpawn: true
 GortDeSpawn: true
 DrStrangeDeSpawn: true
 
-# Sets the health of the different bosses.
+# Sets the health of the different bosses
 OswaldoHealth: 300
 BigBoyHealth: 300
 TimmothyHealth: 300
