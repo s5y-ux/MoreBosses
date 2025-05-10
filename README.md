@@ -1,65 +1,66 @@
-# More Bosses Plugin
+## 🎥 Videos
 
-![– premium Coffee –](https://github.com/s5y-ux/MoreBosses/assets/59636597/9849605a-90c8-44ed-a706-9a2aa0404648)
+- [Oswaldo Showcase](https://www.youtube.com/watch?v=f3znyvnmU6U)
+- [Tim Showcase](https://www.youtube.com/watch?v=3q7dWqC2ZQw)
+- [More Bosses Overview](https://www.youtube.com/watch?v=vrI8A1GO44M)
 
-Welcome to the More Bosses Minecraft plugin! Enhance your Minecraft experience with five challenging and unique bosses: Oswaldo, Bigboy, Timmothy, Albert, and Bartholomew. Each boss brings its own set of skills, drops custom items, and adds excitement to your gameplay.
+## 🧟 Bosses
 
-## Boss Features
+- **Oswaldo**: A formidable Zombie in full Netherite armor. Spawns fireballs and minions, occasionally launching players in a ring of particles.
+- **Tim**: A Skeleton archer riding a skeleton horse. Fires exploding arrows for high-stakes encounters.
+- **Big Boy**: A Giant that spawns zombie minions and dishes out heavy knockback. Face him at your own risk.
+- **Albert**: An infinite slime challenge — Albert never stops multiplying, pushing your survival to the limit.
 
-### Oswaldo
-- A formidable Zombie adorned in full Netherite armor.
-- Spawns minions and launches players back using linear algebra.
-- Drops Oswaldo's Helmet that launches enemies back.
+## 📐 Technical Features
 
-### Bigboy
-- Similar to Oswaldo but with adult minions.
-- Prepare for a battle against overwhelming odds.
+- **Linear Algebra Integration**: Velocity calculations during boss attacks use linear algebra for realistic, dynamic motion.
+- **Transformation Matrices for Particles**: Circular particle effects are generated using matrix transformations for visually immersive combat.
 
-### Timmothy
-- A Skeleton in full diamond armor.
-- Shoots explosive arrows, adding an explosive challenge to encounters.
-- Drops Timmothy's Exploding Bow.
+## 🕹️ Commands
 
-### Albert
-- A never-ending slime, designed for comedic relief.
-- Dropping custom items just for fun.
+```bash
+/adminsword          # Gives you the Admin Sword
+/morebosses          # Opens the GUI for spawning bosses
+/albertremover       # Gives you the stick to remove Albert
+/removebars          # Removes boss bars
+/spawnboss           # Spawns a boss
+/despawnentities     # Despawns all entities in a 500 block radius
+```
 
-### Bartholomew
-- A Wither Skeleton that fights with potion effects.
-- Drops a sword that makes hit entities levitate.
+## 🔒 Permissions
 
-## Commands
+```bash
+morebosses.use               # GUI permission
+morebosses.albertremover     # Use Albert Remover stick
+morebosses.removebars        # Remove all boss bars
+morebosses.adminsword        # Use the Admin Sword
+morebosses.spawncommand      # Use /spawnboss
+morebosses.despawncommand    # Use /despawnentities
+```
 
-- `/morebosses`: Opens the GUI for spawning the bosses.
-- `/removebars`: Removes all boss bars.
-- `/albertremover`: Provides the Albert Remover stick, the only way to remove Albert.
+## ⚙️ Installation
 
-## Permissions
-
-- `morebosses.use`: GUI Permission.
-- `morebosses.albertremover`: Albert Remover stick Permission.
-- `morebosses.removebars`: Allows you to remove all boss bars.
-
-
-## Installation
-
-1. Download the More Bosses plugin JAR file from the [releases](https://www.spigotmc.org/resources/%E2%9C%A8-morebosses-%E2%9C%A8-new-bosses-custom-effects-custom-items.113837/) page.
-2. Place the JAR file in your Minecraft server's `plugins` folder.
-3. Restart your server to apply the changes.
+1. Download the More Bosses plugin JAR file.
+2. Place it in your server's `plugins` folder.
+3. Restart your server.
 4. Configure plugin settings and permissions as needed.
 
-## Contribution
+5. ## 🤝 Contribute
 
-Feel free to contribute to the development of More Bosses by forking the repository, making improvements, and creating pull requests. Bug reports and feature requests are also welcome in the [issue tracker](https://github.com/s5y-ux/MoreBosses/issues).
+- Fork the repository
+- Submit improvements and bug fixes via pull requests
+- Use the issue tracker for bugs and feature requests
 
-## License
+## 📄 License
 
-This plugin is open-source and available under the [MIT License](https://github.com/s5y-ux/MoreBosses/blob/main/LICENSE). See the [LICENSE](https://github.com/s5y-ux/MoreBosses/blob/main/LICENSE) file for more details.
+This plugin is open-source under the **MIT License**. See the `LICENSE` file for details.
 
-## Credits
+## 👨‍💻 Credits
 
-Developed by Joseph Shumaker.
+Developed by **Joseph Shumaker**.  
+Enjoying *More Bosses*? Consider [buying me a coffee](https://www.buymeacoffee.com/) ☕.
 
-If you find More Bosses enjoyable, consider supporting the development by [buying me a coffee](link_to_donation_page).
+---
 
-Happy boss battling in Minecraft!
+**Happy boss battling in Minecraft!**
+
