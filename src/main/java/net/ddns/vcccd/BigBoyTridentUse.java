@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,11 +54,11 @@ public class BigBoyTridentUse implements Listener {
 		}
 	}
 	
-	private Mob getTarget(Player player, int BlockArea) {
+	private LivingEntity getTarget(Player player, int BlockArea) {
 		
 		//Value to be returned from the Function
-		Mob returnVal = null;
-		
+		LivingEntity returnVal = null;
+
 		//Iterates over the array of entities retrieved form the area
 		for(Entity IterativeEntity: player.getNearbyEntities(BlockArea, BlockArea, BlockArea)) {
 			
@@ -84,7 +85,7 @@ public class BigBoyTridentUse implements Listener {
 			if(Theta < 0.130) {
 				
 				//We then cast the entity to type mob (Note instanceof keyword...)
-				Mob target = (Mob) IterativeEntity;
+				LivingEntity target = (LivingEntity) IterativeEntity;
 				
 				//We set the return value to the first enemy in that threshold
 				returnVal = target;
@@ -116,7 +117,7 @@ public class BigBoyTridentUse implements Listener {
 				else if(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&e&lBig Boy\'s Trident"))) {
 					if(event.getPlayer().getLevel() >= 3) {
 					event.getPlayer().setLevel(event.getPlayer().getLevel() - 3);
-					Mob mob = getTarget(event.getPlayer(), 20);
+					LivingEntity mob = getTarget(event.getPlayer(), 20);
 					if(mob == null) {
 						particles(event.getPlayer());
 						assert true;
