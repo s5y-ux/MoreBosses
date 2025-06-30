@@ -18,7 +18,9 @@ public class DespawnCommand implements CommandExecutor {
         if(sender instanceof Player){
             Player player = (Player) sender;
             for(Entity entity: player.getNearbyEntities(500, 500, 500)){
-                entity.remove();
+                if(!(entity instanceof Player)) {
+                    entity.remove();
+                }
             }
             player.sendMessage(main.getPluginPrefix() + "All nearby entities have been despawned.");
             
