@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
-import org.bukkit.entity.Mob;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,16 +29,20 @@ public class LeveSwordEvent implements Listener {
 				assert true;
 			} else if(player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(ChatColor.GRAY + "Leve-Sword")) {
 				if(RNG(4) == 3) {
-					Mob ReferenceEntity = (Mob) event.getEntity();
-					ReferenceEntity.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 50, 3));
-					double X, Y, Z;
-		            X = ReferenceEntity.getLocation().getX();
-		            Y = ReferenceEntity.getLocation().getY();
-		            Z = ReferenceEntity.getLocation().getZ();
+					try {
+						LivingEntity ReferenceEntity = (LivingEntity) event.getEntity();
+						ReferenceEntity.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 50, 3));
+						double X, Y, Z;
+						X = ReferenceEntity.getLocation().getX();
+						Y = ReferenceEntity.getLocation().getY();
+						Z = ReferenceEntity.getLocation().getZ();
 
-		            for (int i = -2; i < 2; i++) {
-		            	ReferenceEntity.getWorld().spawnParticle(Particle.CLOUD, X+i, Y, Z+i, 5);
-		            }
+						for (int i = -2; i < 2; i++) {
+							ReferenceEntity.getWorld().spawnParticle(Particle.CLOUD, X+i, Y, Z+i, 5);
+						}
+					} catch (Exception e) {
+						assert true;
+					}
 					
 				}
 			}
