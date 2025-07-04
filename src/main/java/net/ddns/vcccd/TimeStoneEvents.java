@@ -1,8 +1,16 @@
 package net.ddns.vcccd;
 
-import org.bukkit.*;
+import java.util.Collection;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Ageable;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -13,118 +21,142 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Collection;
-import java.util.Objects;
-
 public class TimeStoneEvents implements Listener {
+
+    private final Main main;
+    private int radius;
+    private int duration;
+    private int numParticles;
+
+    public TimeStoneEvents(Main main) {
+        this.main = main;
+        this.radius = main.getConfig().getInt("radius");
+        this.duration = main.getConfig().getInt("duration");
+        this.numParticles = main.getConfig().getInt("numParticles");
+    }
+
+    // Handles general Time Stone interaction (Right-click on block or air)
     @EventHandler
-    public void worldInteract(PlayerInteractEvent event) {
-        // Player triggering event
-        Player player = event.getPlayer();
-        PlayerInventory inventory = player.getInventory();
+    public void generalTimeStoneUse(PlayerInteractEvent event) {
+        try {
+            Player player = event.getPlayer();
+            PlayerInventory inventory = player.getInventory();
+            Action eventAction = event.getAction();
 
-        // Check if player is holding the Time Stone in either hand and if the cooldown is at zero
-        if((Objects.requireNonNull(inventory.getItemInMainHand().getItemMeta()).getDisplayName().equals(ChatColor.GREEN + "Time Stone")
-                || Objects.requireNonNull(inventory.getItemInOffHand().getItemMeta()).getDisplayName().equals(ChatColor.GREEN + "Time Stone"))
-                && player.getCooldown(Material.EMERALD) == 0) {
-            // Check if the player is right-clicking (and NOT sneaking)
-            if(!player.isSneaking() && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
-                // Sort of hyperparameters for the effect
-                int radius = 10;
-                int duration = 200;
-                int numParticles = 200;
-                // Angle to space particles around circle
-                double angle = (2 * Math.PI) / numParticles;
+            boolean isHoldingTimeStone = inventory.getItemInMainHand().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Time Stone");
+            boolean cooldownComplete = player.getCooldown(Material.EMERALD) == 0;
+            boolean isRightClick = eventAction == Action.RIGHT_CLICK_BLOCK || eventAction == Action.RIGHT_CLICK_AIR;
 
-                // Get the nearby entities within given radius of the player
-                Collection<Entity> entities = player.getWorld().getNearbyEntities(player.getLocation(), radius, radius, radius);
+            if (cooldownComplete && isHoldingTimeStone && isRightClick) {
+                slowTime(player);
 
-                // Get the player location for circle spawning
-                Location loc = player.getLocation();
-
-                for (int i = 0; i < numParticles; i++) {
-                    // Calculate the x and z offset
-                    double x = radius * Math.cos(angle * i);
-                    double z = radius * Math.sin(angle * i);
-
-                    // Spawn a ring of particles with the radius of the time stone effect
-                    player.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, loc.getX() + x, loc.getY(), loc.getZ() + z, 3);
-                }
-
-                for (Entity entity : entities) {
-                    try {
-                        LivingEntity livingEntity = (LivingEntity) entity;
-
-                        // Add the potion effect to the entities in range
-                        if (!livingEntity.equals(player)) {
-                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, duration, 3));
-                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, duration, 1));
-                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, duration, 3));
-                        }
-                    }catch (Exception e) {
-                        assert true;
-                    }
-                }
-
-                // Start the cooldown timer to prevent spamming of the ability
-                player.setCooldown(Material.EMERALD, 100);
-            }else if(player.isSneaking() && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                // This is for crops
-                Block block = event.getClickedBlock();
-
+                Block clickedBlock = event.getClickedBlock();
                 try {
-                    // Set the crop to fully grown
-                    org.bukkit.block.data.Ageable blockData = (org.bukkit.block.data.Ageable) block.getBlockData();
+                    // Grow crops instantly
+                    org.bukkit.block.data.Ageable blockData = (org.bukkit.block.data.Ageable) clickedBlock.getBlockData();
                     blockData.setAge(7);
-                    block.setBlockData(blockData);
+                    clickedBlock.setBlockData(blockData);
 
-                    // Spawn effect particles
-                    Location loc = block.getLocation();
-                    for(int i = 0; i < 10; i++) {
-                        player.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, loc.getX() + Math.random(), loc.getY() + Math.random(), loc.getZ() + Math.random(), 3);
+                    // Visual particles
+                    Location blockLocation = clickedBlock.getLocation();
+                    for (int i = 0; i < 10; i++) {
+                        player.getWorld().spawnParticle(
+                            Particle.HAPPY_VILLAGER,
+                            blockLocation.getX() + Math.random(),
+                            blockLocation.getY() + Math.random(),
+                            blockLocation.getZ() + Math.random(),
+                            3
+                        );
                     }
 
-                    // Shorter cooldown for this effect
-                    player.setCooldown(Material.EMERALD, 10);
-                }catch (Exception e) {
-                    assert true;
+                    // Short cooldown for crop use
+                    player.setCooldown(Material.EMERALD, 100);
+                } catch (Exception e) {
+                    // Ignored
                 }
             }
+        } catch (Exception e) {
+            // Ignored
         }
     }
 
+    // Handles Time Stone use when right-clicking an entity while sneaking
     @EventHandler
     public void entityInteract(PlayerInteractEntityEvent event) {
+        try{
+        if (event.getHand() != EquipmentSlot.HAND) return;
+
         Player player = event.getPlayer();
         PlayerInventory inventory = player.getInventory();
 
-        // Prevent double event trigger
-        if(event.getHand() != EquipmentSlot.HAND) return;
+        boolean isHoldingTimeStone = inventory.getItemInMainHand().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Time Stone");
+        boolean cooldownComplete = player.getCooldown(Material.EMERALD) == 0;
+        boolean isTargetAgeable = event.getRightClicked() instanceof Ageable;
 
-        // If player is sneaking and right-clicking entity...
-        if(player.isSneaking() && (Objects.requireNonNull(inventory.getItemInMainHand().getItemMeta()).getDisplayName().equals(ChatColor.GREEN + "Time Stone")
-                || Objects.requireNonNull(inventory.getItemInOffHand().getItemMeta()).getDisplayName().equals(ChatColor.GREEN + "Time Stone"))
-                && player.getCooldown(Material.EMERALD) == 0) {
-            if(event.getRightClicked() instanceof Ageable) {
-                Ageable ageable = (Ageable) event.getRightClicked();
+        if (player.isSneaking() && isHoldingTimeStone && cooldownComplete && isTargetAgeable) {
+            Ageable target = (Ageable) event.getRightClicked();
 
-                // Toggle the age between baby and adult
-                if(ageable.isAdult()) {
-                    ageable.setBaby();
-                }else {
-                    ageable.setAdult();
+            // Toggle between baby and adult
+            if (target.isAdult()) {
+                target.setBaby();
+            } else {
+                target.setAdult();
+            }
+
+            // Visual particles
+            Location loc = target.getLocation();
+            for (int i = 0; i < 10; i++) {
+                player.getWorld().spawnParticle(
+                    Particle.HAPPY_VILLAGER,
+                    loc.getX() + (Math.random() - 0.5),
+                    loc.getY() + Math.random(),
+                    loc.getZ() + (Math.random() - 0.5),
+                    3
+                );
+            }
+
+            // Short cooldown
+            player.setCooldown(Material.EMERALD, 100);
+        }
+    } catch (Exception e) {
+            // Ignore any errors
+        }
+    }
+
+    // Core logic for slowing down time and applying effects to nearby entities
+    private void slowTime(Player player) {
+        double angle = (2 * Math.PI) / numParticles;
+        Location playerLoc = player.getLocation();
+
+        // Spawn circular particle ring around the player
+        for (int i = 0; i < numParticles; i++) {
+            double offsetX = radius * Math.cos(angle * i);
+            double offsetZ = radius * Math.sin(angle * i);
+            player.getWorld().spawnParticle(
+                Particle.HAPPY_VILLAGER,
+                playerLoc.getX() + offsetX,
+                playerLoc.getY(),
+                playerLoc.getZ() + offsetZ,
+                3
+            );
+        }
+
+        // Affect nearby entities
+        Collection<Entity> nearbyEntities = player.getWorld().getNearbyEntities(playerLoc, radius, radius, radius);
+        for (Entity entity : nearbyEntities) {
+            try {
+                if (entity instanceof LivingEntity && !entity.equals(player)) {
+                    LivingEntity target = (LivingEntity) entity;
+                    target.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, duration, 3));
+                    target.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, duration, 1));
+                    target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, duration, 3));
                 }
-
-                Location loc = ageable.getLocation();
-
-                // Spawn effect particles
-                for(int i = 0; i < 10; i++) {
-                    player.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, loc.getX() + (Math.random() - 0.5), loc.getY() + Math.random(), loc.getZ() + (Math.random() - 0.5), 3);
-                }
-
-                // Shorter cooldown
-                player.setCooldown(Material.EMERALD, 10);
+            } catch (Exception e) {
+                // Ignore failed casts or errors
             }
         }
+
+        // General cooldown for main time-slowing effect
+        player.setCooldown(Material.EMERALD, 100);
     }
 }

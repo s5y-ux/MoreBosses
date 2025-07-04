@@ -51,7 +51,7 @@ public class DrStrangeEvents implements Listener {
 			ItemStack timeStone = new ItemStack(Material.EMERALD);
 			ItemMeta timeMeta = timeStone.getItemMeta();
 			timeMeta.setDisplayName(ChatColor.GREEN + "Time Stone");
-			timeMeta.setLore(java.util.List.of(ChatColor.GRAY + "A powerful stone that controls time."));
+			timeMeta.setLore(java.util.List.of(ChatColor.GRAY + "A powerful stone that controls time.", ChatColor.translateAlternateColorCodes('&', "&eRight-click &7to slow down time for nearby entities."), ChatColor.translateAlternateColorCodes('&', "&eRight-click &7on blocks to speed up growth."), ChatColor.translateAlternateColorCodes('&', "&eShift + Right-click &7on entities to toggle their age.")));
 			timeStone.setItemMeta(timeMeta);
 			event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), timeStone);
 		}
