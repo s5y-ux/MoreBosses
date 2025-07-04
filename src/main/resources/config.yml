@@ -34,3 +34,7 @@ PiggyHealth: 300
 GortHealth: 300
 DrStrangeHealth: 300
 
+#Time Stone Settings
+radius: 10
+duration: 200
+numParticles: 200

@@ -83,6 +83,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new SpawnInWorld(this), this);
 		getServer().getPluginManager().registerEvents(new UpdateChecker(this), this);
 		getServer().getPluginManager().registerEvents(new BossBars(this), this);
+		getServer().getPluginManager().registerEvents(new TimeStoneEvents(this), this);
 		
 		console.sendMessage(getPluginPrefix() + "The MoreBosses Plugin has beed Loaded...");
 		console.sendMessage(getPluginPrefix() + "Please note that this does not mean all features will work");

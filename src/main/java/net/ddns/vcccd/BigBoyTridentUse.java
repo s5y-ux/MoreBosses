@@ -6,7 +6,6 @@ import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -63,7 +62,7 @@ public class BigBoyTridentUse implements Listener {
 		for(Entity IterativeEntity: player.getNearbyEntities(BlockArea, BlockArea, BlockArea)) {
 			
 			//We want to make sure the target is a Mob
-			if(IterativeEntity instanceof Mob) {
+			if(IterativeEntity instanceof LivingEntity) {
 				
 			//If so, we want to get the directional vector of the eye location
 			Vector PlayerDirectionalVector = player.getEyeLocation().getDirection();
