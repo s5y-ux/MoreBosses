@@ -3,6 +3,7 @@ package net.ddns.vcccd;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -116,6 +117,7 @@ public class BigBoyTridentUse implements Listener {
 				else if(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&e&lBig Boy\'s Trident"))) {
 					if(event.getPlayer().getLevel() >= 3) {
 					event.getPlayer().setLevel(event.getPlayer().getLevel() - 3);
+					event.getPlayer().playSound(event.getPlayer(), Sound.BLOCK_AMETHYST_BLOCK_FALL, 500, 0);
 					LivingEntity mob = getTarget(event.getPlayer(), 20);
 					if(mob == null) {
 						particles(event.getPlayer());
