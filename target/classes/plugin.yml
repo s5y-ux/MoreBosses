@@ -4,27 +4,31 @@ version: 2.1.0
 author: s5y, noahcoder11
 api-version: '1.20'
 commands:
-   albertremover:
-      description: Gives you the Albert remover
-      usage: /<command>
-      permission: morebosses.albertremover
-   morebosses:
-      description: Opens the GUI
-      usage: /<command>
-      permission: morebosses.use
-   removebars:
-      description: Removes the Boss Bars
-      usage: /<command>
-      permission: morebosses.removebars
-   adminsword:
-      description: Allows you to kill anything
-      usage: /<command>
-      permission: morebosses.adminsword
-   spawnboss:
-      description: Spawns boss with command
-      usage: /<command> <boss>
-      permission: morebosses.spawncommand
-   despawnentities:
-      description: Spawns boss with command
-      usage: /<command> <boss>
-      permission: morebosses.despawncommand
+  albertremover:
+    description: Gives you the Albert remover
+    usage: /<command>
+    permission: morebosses.albertremover
+  morebosses:
+    description: Opens the GUI
+    usage: /<command>
+    permission: morebosses.use
+  removebars:
+    description: Removes the Boss Bars
+    usage: /<command>
+    permission: morebosses.removebars
+  adminsword:
+    description: Allows you to kill anything
+    usage: /<command>
+    permission: morebosses.adminsword
+  spawnboss:
+    description: Spawns boss with command
+    usage: /<command> <boss>
+    permission: morebosses.spawncommand
+  despawnentities:
+    description: Spawns boss with command
+    usage: /<command> <boss>
+    permission: morebosses.despawncommand
+  bossegg:
+    description: Gives you a spawn
+    usage: /<command> <boss>
+    permission: morebosses.bossegg

@@ -38,3 +38,6 @@ DrStrangeHealth: 300
 radius: 10
 duration: 200
 numParticles: 200
+
+# Announce when a boss is killed
+AnnounceBossKill: true

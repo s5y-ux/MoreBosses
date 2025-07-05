@@ -35,6 +35,7 @@ public class Main extends JavaPlugin {
 		config.addDefault("GortHealth", 300);
 		config.addDefault("DrStrangeHealth",  300);
 		config.addDefault("SpawnInWorld", false);
+		config.addDefault("AnnounceBossKill", true);
 		
 		config.addDefault("OswaldoSpawn", true);
 		config.addDefault("BigBoySpawn", false);
@@ -62,6 +63,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("spawnboss").setExecutor(new SpawnBossCommand(this));
 		this.getCommand("removebars").setExecutor(new BossBars(this));
 		this.getCommand("despawnentities").setExecutor(new DespawnCommand(this));
+		this.getCommand("bossegg").setExecutor(new EggCommand(this));
 		
 		//Registers the class for the damaged entity
 		getServer().getPluginManager().registerEvents(new BossSpawnGUIEvents(this), this);
@@ -84,6 +86,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new UpdateChecker(this), this);
 		getServer().getPluginManager().registerEvents(new BossBars(this), this);
 		getServer().getPluginManager().registerEvents(new TimeStoneEvents(this), this);
+		getServer().getPluginManager().registerEvents(new EggEvents(this), this);
 		
 		console.sendMessage(getPluginPrefix() + "The MoreBosses Plugin has beed Loaded...");
 		console.sendMessage(getPluginPrefix() + "Please note that this does not mean all features will work");
