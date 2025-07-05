@@ -35,6 +35,7 @@ public class Main extends JavaPlugin {
 		config.addDefault("GortHealth", 300);
 		config.addDefault("DrStrangeHealth",  300);
 		config.addDefault("SpawnInWorld", false);
+		config.addDefault("AnnounceBossKill", true);
 		
 		config.addDefault("OswaldoSpawn", true);
 		config.addDefault("BigBoySpawn", false);
