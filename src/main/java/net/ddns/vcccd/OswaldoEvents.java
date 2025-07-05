@@ -55,15 +55,14 @@ public class OswaldoEvents implements Listener{
 	@EventHandler
 	public void onOswaldoAttacked(EntityDamageByEntityEvent event) {
 		try {
-			Zombie oswaldo = (Zombie) event.getEntity();
 			boolean isPlayer = event.getDamager() instanceof Player;
 			boolean listContainsPlayer = OswaldoPlayers.contains(event.getDamager());
-			if(isPlayer && !listContainsPlayer) {
+			if (isPlayer && !listContainsPlayer) {
 				OswaldoPlayers.add((Player) event.getDamager());
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 	}
-		
 	
 	@EventHandler
 	public void onOswaldoDeath(EntityDeathEvent event) {

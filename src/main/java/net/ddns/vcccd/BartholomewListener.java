@@ -1,5 +1,6 @@
 package net.ddns.vcccd;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
@@ -17,7 +18,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class BartholomewListener implements Listener {
-	
+	private ArrayList<Player> BartholomewPlayers = new ArrayList<>();
+	private final Main main;
+
+	public BartholomewListener(Main main) { this.main = main; }
+
 	// Helper Methods:
 	//================================
 	private int RNG(int scope) {
@@ -26,7 +31,7 @@ public class BartholomewListener implements Listener {
 	//================================
 	
 	@EventHandler
-	public void onBrtholomewDeathEvent(EntityDeathEvent event) {
+	public void onBartholomewDeathEvent(EntityDeathEvent event) {
 		if(event.getEntity().getCustomName() == null) {
 			assert true;
 		} else if (event.getEntity().getCustomName().equals(ChatColor.BLACK + "Bartholomew")) {
@@ -46,13 +51,27 @@ public class BartholomewListener implements Listener {
             }
             
             ReferenceEntity.getWorld().dropItem(ReferenceEntity.getLocation(), LeveSword);
+
+			String playersWhoKilledBartholomew = BartholomewPlayers.stream()
+					.map(Player::getName)
+					.reduce("", (a, b) -> a + ", " + b);
+
+			for(Player player: main.getServer().getOnlinePlayers()) {
+				player.sendMessage(main.getPluginPrefix() + "Bartholomew has been slain by" + playersWhoKilledBartholomew);
+			}
+			BartholomewPlayers.clear();
 		}
 	}
 	
 	@EventHandler
-	public void onBrtholomewAttackEvent(EntityDamageByEntityEvent event) {
+	public void onBartholomewAttackEvent(EntityDamageByEntityEvent event) {
 		if(event.getDamager() instanceof Player) {
 			Player player = (Player) event.getDamager();
+
+			boolean listContainsPlayer = BartholomewPlayers.contains(event.getDamager());
+			if(!listContainsPlayer) {
+				BartholomewPlayers.add((Player) event.getDamager());
+			}
 		if(event.getEntity().getCustomName() == null) {
 			assert true;
 		} else {

@@ -1,5 +1,6 @@
 package net.ddns.vcccd;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
@@ -16,6 +17,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class DrStrangeEvents implements Listener {
+	private ArrayList<Player> DrStrangePlayers = new ArrayList<>();
+	private final Main main;
+
+	public DrStrangeEvents(Main main) { this.main = main; }
 
 	@EventHandler
 	public void onDrStrangeAttack(EntityDamageByEntityEvent event) {
@@ -46,6 +51,18 @@ public class DrStrangeEvents implements Listener {
 	}
 
 	@EventHandler
+	public void onDrStrangeAttacked(EntityDamageByEntityEvent event) {
+		try {
+			boolean isPlayer = event.getDamager() instanceof Player;
+			boolean listContainsPlayer = DrStrangePlayers.contains(event.getDamager());
+			if (isPlayer && !listContainsPlayer) {
+				DrStrangePlayers.add((Player) event.getDamager());
+			}
+		} catch (Exception e) {
+		}
+	}
+
+	@EventHandler
 	public void onDrStrangeDeath(EntityDeathEvent event) {
 		if(event.getEntity() instanceof Enderman && event.getEntity().getCustomName().equals(ChatColor.DARK_PURPLE + "Dr. Strange")) {
 			ItemStack timeStone = new ItemStack(Material.EMERALD);
@@ -54,6 +71,15 @@ public class DrStrangeEvents implements Listener {
 			timeMeta.setLore(java.util.List.of(ChatColor.GRAY + "A powerful stone that controls time.", ChatColor.translateAlternateColorCodes('&', "&eRight-click &7to slow down time for nearby entities."), ChatColor.translateAlternateColorCodes('&', "&eRight-click &7on blocks to speed up growth."), ChatColor.translateAlternateColorCodes('&', "&eShift + Right-click &7on entities to toggle their age.")));
 			timeStone.setItemMeta(timeMeta);
 			event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), timeStone);
+
+			String playersWhoKilledDrStrange = DrStrangePlayers.stream()
+					.map(Player::getName)
+					.reduce("", (a, b) -> a + ", " + b);
+
+			for(Player player: main.getServer().getOnlinePlayers()) {
+				player.sendMessage(main.getPluginPrefix() + "DrStrange has been slain by" + playersWhoKilledDrStrange);
+			}
+			DrStrangePlayers.clear();
 		}
 	}
 }

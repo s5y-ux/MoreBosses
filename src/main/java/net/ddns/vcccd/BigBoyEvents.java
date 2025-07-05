@@ -1,5 +1,6 @@
 package net.ddns.vcccd;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
@@ -25,28 +26,32 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public class BigBoyEvents implements Listener {
-	
+	private ArrayList<Player> BigBoyPlayers = new ArrayList<>();
+	private final Main main;
+
+	public BigBoyEvents(Main main) { this.main = main; }
+
 	// Helper Methods:
-			//=============================
-			private int RNG(int scope) {
-		        return (new Random().nextInt(scope));
-		    }
-			
-			private ItemStack CustomItem(Material item, String name) {
-				ItemStack ReturnItem = new ItemStack(item);
-				ItemMeta ReturnItemData = ReturnItem.getItemMeta();
-				ReturnItemData.setDisplayName(name);
-				ReturnItem.setItemMeta(ReturnItemData);
-				return(ReturnItem);
-			}
-			
-			private void DropItemAt(LivingEntity entity, ItemStack item) {
-				Location location = entity.getLocation();
-				World world = entity.getWorld();
-				world.dropItem(location, item);
-			}
-			//=============================
-		
+	//=============================
+	private int RNG(int scope) {
+		return (new Random().nextInt(scope));
+	}
+
+	private ItemStack CustomItem(Material item, String name) {
+		ItemStack ReturnItem = new ItemStack(item);
+		ItemMeta ReturnItemData = ReturnItem.getItemMeta();
+		ReturnItemData.setDisplayName(name);
+		ReturnItem.setItemMeta(ReturnItemData);
+		return(ReturnItem);
+	}
+
+	private void DropItemAt(LivingEntity entity, ItemStack item) {
+		Location location = entity.getLocation();
+		World world = entity.getWorld();
+		world.dropItem(location, item);
+	}
+	//=============================
+
 	
 	@EventHandler
 	public void onBigBoyDeathEvent(EntityDeathEvent event) {
@@ -55,6 +60,15 @@ public class BigBoyEvents implements Listener {
 			boolean isBigBoy = bigBoy.getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lBig Boy"));
 			if(isBigBoy) {
 				DropItemAt(event.getEntity(), CustomItem(Material.TRIDENT, ChatColor.translateAlternateColorCodes('&', "&e&lBig Boy\'s Trident")));
+
+				String playersWhoKilledBigBoy = BigBoyPlayers.stream()
+						.map(Player::getName)
+						.reduce("", (a, b) -> a + ", " + b);
+
+				for(Player player: main.getServer().getOnlinePlayers()) {
+					player.sendMessage(main.getPluginPrefix() + "BigBoy has been slain by" + playersWhoKilledBigBoy);
+				}
+				BigBoyPlayers.clear();
 			}
 		} catch (Exception e) {
 			assert true;
@@ -64,6 +78,12 @@ public class BigBoyEvents implements Listener {
 	@EventHandler
 	public void onBigBoyAttacked(EntityDamageByEntityEvent event) {
 		try {
+			boolean isPlayer = event.getDamager() instanceof Player;
+			boolean listContainsPlayer = BigBoyPlayers.contains(event.getDamager());
+			if(isPlayer && !listContainsPlayer) {
+				BigBoyPlayers.add((Player) event.getDamager());
+			}
+
 			Entity ReferenceEntity = event.getEntity();
 			@SuppressWarnings("unused")
 			Giant canCast = (Giant) ReferenceEntity;
