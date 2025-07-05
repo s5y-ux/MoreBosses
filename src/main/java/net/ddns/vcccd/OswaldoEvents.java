@@ -77,8 +77,10 @@ public class OswaldoEvents implements Listener{
 					.map(Player::getName)
 					.reduce("", (a, b) -> a + ", " + b);
 
-				for(Player player: main.getServer().getOnlinePlayers()) {
+				if(main.getConfig().getBoolean("AnnounceBossKill")) {
+					for(Player player: main.getServer().getOnlinePlayers()) {
 					player.sendMessage(main.getPluginPrefix() + "Oswaldo has been slain by" + playersWhoKilledOswaldo);
+					}
 				}
 				OswaldoPlayers.clear();
 			}
