@@ -1,5 +1,6 @@
 package net.ddns.vcccd;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
@@ -23,6 +24,12 @@ import org.bukkit.util.Vector;
 
 public class OswaldoEvents implements Listener{
 	
+	private ArrayList<Player> OswaldoPlayers = new ArrayList<>();
+	private final Main main;
+
+	public OswaldoEvents(Main main) {
+		this.main = main;
+	}
 	
 	// Helper Methods:
 	//=============================
@@ -44,6 +51,19 @@ public class OswaldoEvents implements Listener{
 		world.dropItem(location, item);
 	}
 	//=============================
+
+	@EventHandler
+	public void onOswaldoAttacked(EntityDamageByEntityEvent event) {
+		try {
+			Zombie oswaldo = (Zombie) event.getEntity();
+			boolean isPlayer = event.getDamager() instanceof Player;
+			boolean listContainsPlayer = OswaldoPlayers.contains(event.getDamager());
+			if(isPlayer && !listContainsPlayer) {
+				OswaldoPlayers.add((Player) event.getDamager());
+			}
+		} catch (Exception e) {}
+	}
+		
 	
 	@EventHandler
 	public void onOswaldoDeath(EntityDeathEvent event) {
@@ -53,6 +73,14 @@ public class OswaldoEvents implements Listener{
 			
 			if(isOswaldo) {
 				DropItemAt(oswaldo, CustomItem(Material.NETHERITE_HELMET, ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo\'s Helmet")));
+				String playersWhoKilledOswaldo = OswaldoPlayers.stream()
+					.map(Player::getName)
+					.reduce("", (a, b) -> a + ", " + b);
+
+				for(Player player: main.getServer().getOnlinePlayers()) {
+					player.sendMessage(main.getPluginPrefix() + "Oswaldo has been slain by" + playersWhoKilledOswaldo);
+				}
+				OswaldoPlayers.clear();
 			}
 			
 		} catch (Exception e) {

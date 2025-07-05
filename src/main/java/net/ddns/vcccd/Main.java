@@ -69,7 +69,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new BossSpawnGUIEvents(this), this);
 		getServer().getPluginManager().registerEvents(new AdminSwordListener(), this);	
 		getServer().getPluginManager().registerEvents(new AlbertEvents(), this);
-		getServer().getPluginManager().registerEvents(new OswaldoEvents(), this);
+		getServer().getPluginManager().registerEvents(new OswaldoEvents(this), this);
 		getServer().getPluginManager().registerEvents(new OswaldoHelmetEvents(), this);
 		getServer().getPluginManager().registerEvents(new BigBoyEvents(), this);
 		getServer().getPluginManager().registerEvents(new BigBoyTridentUse(), this);
