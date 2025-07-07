@@ -2,9 +2,9 @@ package net.ddns.vcccd;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.entity.PigZombie;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.EventHandler;
@@ -12,23 +12,26 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-import java.util.ArrayList;
-
 public class AlbertEvents implements Listener {
-	private ArrayList<Player> AlbertPlayers = new ArrayList<>();
+
 	private final Main main;
 
 	public AlbertEvents(Main main) { this.main = main; }
+
+	private void spawnExperienceOrbs(Location location, int totalOrbs, int expPerOrb) {
+		World world = location.getWorld();
+		for (int i = 0; i < totalOrbs; i++) {
+			ExperienceOrb orb = (ExperienceOrb) world.spawn(location, ExperienceOrb.class);
+			orb.setExperience(expPerOrb);
+		}
+	}
 
 	@EventHandler
 	public void onPlayerAttackAlbert(EntityDamageByEntityEvent event) {
 		try {
 			Slime slime = (Slime) event.getEntity();
 			Player player = (Player) event.getDamager();
-			boolean listContainsPlayer = AlbertPlayers.contains(player);
-			if(!listContainsPlayer) {
-				AlbertPlayers.add((Player) event.getDamager());
-			}
+			
 		if(slime.getCustomName().equals(ChatColor.YELLOW + "Albert")) {
 			String playerItemName = player.getInventory().getItemInMainHand().getItemMeta().getDisplayName();
 			if(!playerItemName.equals(ChatColor.translateAlternateColorCodes('&', "&eAlbert Remover"))) {
@@ -51,14 +54,13 @@ public class AlbertEvents implements Listener {
 			boolean isAlbert = piggy.getCustomName().equals(ChatColor.YELLOW + "Albert");
 
 			if(isAlbert) {
-				String playersWhoKilledPiggy = AlbertPlayers.stream()
-						.map(Player::getName)
-						.reduce("", (a, b) -> a + ", " + b);
-
+				if(main.getConfig().getBoolean("AnnounceBossKill")){
 				for(Player player: main.getServer().getOnlinePlayers()) {
-					player.sendMessage(main.getPluginPrefix() + "Albert has been slain by" + playersWhoKilledPiggy);
+					player.sendMessage(main.getPluginPrefix() + "Albert has been slain!");
+					player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 0);
+
 				}
-				AlbertPlayers.clear();
+			}
 			}
 
 		} catch (Exception e) {

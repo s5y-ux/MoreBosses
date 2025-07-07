@@ -3,21 +3,20 @@ package net.ddns.vcccd;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-
 public class GortEvents implements Listener {
-	private ArrayList<Player> GortPlayers = new ArrayList<>();
+
 	private final Main main;
 
 	public GortEvents(Main main) { this.main = main; }
@@ -37,19 +36,16 @@ public class GortEvents implements Listener {
 		World world = entity.getWorld();
 		world.dropItem(location, item);
 	}
+
+	private void spawnExperienceOrbs(Location location, int totalOrbs, int expPerOrb) {
+		World world = location.getWorld();
+		for (int i = 0; i < totalOrbs; i++) {
+			ExperienceOrb orb = (ExperienceOrb) world.spawn(location, ExperienceOrb.class);
+			orb.setExperience(expPerOrb);
+		}
+	}
 	//======================
 
-	@EventHandler
-	public void onGortAttacked(EntityDamageByEntityEvent event) {
-		try {
-			boolean isPlayer = event.getDamager() instanceof Player;
-			boolean listContainsPlayer = GortPlayers.contains(event.getDamager());
-			if(isPlayer && !listContainsPlayer) {
-				GortPlayers.add((Player) event.getDamager());
-			}
-		} catch (Exception e) {}
-	}
-	
 	@EventHandler
 	public void onGortDeath(EntityDeathEvent event) {
 		try {
@@ -58,15 +54,15 @@ public class GortEvents implements Listener {
 			
 			if(isGort) {
 				DropItemAt(event.getEntity(), CustomItem(Material.IRON_HOE, ChatColor.translateAlternateColorCodes('&', "&eGort's Hoe")));
+				spawnExperienceOrbs(event.getEntity().getLocation(), 100, 2);
 
-				String playersWhoKilledPiggy = GortPlayers.stream()
-						.map(Player::getName)
-						.reduce("", (a, b) -> a + ", " + b);
-
+				if(main.getConfig().getBoolean("AnnounceBossKill")){
 				for(Player player: main.getServer().getOnlinePlayers()) {
-					player.sendMessage(main.getPluginPrefix() + "Gort has been slain by" + playersWhoKilledPiggy);
+					player.sendMessage(main.getPluginPrefix() + "Gort has been slain!");
+					player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 0);
+
 				}
-				GortPlayers.clear();
+			}
 			}
 				
 		} catch (Exception e) {

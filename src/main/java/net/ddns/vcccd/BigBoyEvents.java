@@ -7,9 +7,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Giant;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -50,6 +52,14 @@ public class BigBoyEvents implements Listener {
 		World world = entity.getWorld();
 		world.dropItem(location, item);
 	}
+
+	private void spawnExperienceOrbs(Location location, int totalOrbs, int expPerOrb) {
+		World world = location.getWorld();
+		for (int i = 0; i < totalOrbs; i++) {
+			ExperienceOrb orb = (ExperienceOrb) world.spawn(location, ExperienceOrb.class);
+			orb.setExperience(expPerOrb);
+		}
+	}
 	//=============================
 
 	
@@ -60,15 +70,15 @@ public class BigBoyEvents implements Listener {
 			boolean isBigBoy = bigBoy.getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lBig Boy"));
 			if(isBigBoy) {
 				DropItemAt(event.getEntity(), CustomItem(Material.TRIDENT, ChatColor.translateAlternateColorCodes('&', "&e&lBig Boy\'s Trident")));
+				spawnExperienceOrbs(event.getEntity().getLocation(), 100, 2);
 
-				String playersWhoKilledBigBoy = BigBoyPlayers.stream()
-						.map(Player::getName)
-						.reduce("", (a, b) -> a + ", " + b);
-
+				if(main.getConfig().getBoolean("AnnounceBossKill")){
 				for(Player player: main.getServer().getOnlinePlayers()) {
-					player.sendMessage(main.getPluginPrefix() + "BigBoy has been slain by" + playersWhoKilledBigBoy);
+					player.sendMessage(main.getPluginPrefix() + "BigBoy has been slain!");
+					player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 0);
+
 				}
-				BigBoyPlayers.clear();
+			}
 			}
 		} catch (Exception e) {
 			assert true;
