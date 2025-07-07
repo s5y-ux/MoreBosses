@@ -68,20 +68,20 @@ public class Main extends JavaPlugin {
 		//Registers the class for the damaged entity
 		getServer().getPluginManager().registerEvents(new BossSpawnGUIEvents(this), this);
 		getServer().getPluginManager().registerEvents(new AdminSwordListener(), this);	
-		getServer().getPluginManager().registerEvents(new AlbertEvents(), this);
-		getServer().getPluginManager().registerEvents(new OswaldoEvents(), this);
+		getServer().getPluginManager().registerEvents(new AlbertEvents(this), this);
+		getServer().getPluginManager().registerEvents(new OswaldoEvents(this), this);
 		getServer().getPluginManager().registerEvents(new OswaldoHelmetEvents(), this);
-		getServer().getPluginManager().registerEvents(new BigBoyEvents(), this);
+		getServer().getPluginManager().registerEvents(new BigBoyEvents(this), this);
 		getServer().getPluginManager().registerEvents(new BigBoyTridentUse(), this);
-		getServer().getPluginManager().registerEvents(new TimmothyEvents(), this);
+		getServer().getPluginManager().registerEvents(new TimmothyEvents(this), this);
 		getServer().getPluginManager().registerEvents(new BombowEvents(), this);
-		getServer().getPluginManager().registerEvents(new BartholomewListener(), this);
+		getServer().getPluginManager().registerEvents(new BartholomewListener(this), this);
 		getServer().getPluginManager().registerEvents(new LeveSwordEvent(), this);
-		getServer().getPluginManager().registerEvents(new PiggyEvents(), this);
+		getServer().getPluginManager().registerEvents(new PiggyEvents(this), this);
 		getServer().getPluginManager().registerEvents(new PiggyAxeEvents(), this);
-		getServer().getPluginManager().registerEvents(new GortEvents(), this);
+		getServer().getPluginManager().registerEvents(new GortEvents(this), this);
 		getServer().getPluginManager().registerEvents(new GortsHoeEvents(), this);
-		getServer().getPluginManager().registerEvents(new DrStrangeEvents(), this);
+		getServer().getPluginManager().registerEvents(new DrStrangeEvents(this), this);
 		getServer().getPluginManager().registerEvents(new SpawnInWorld(this), this);
 		getServer().getPluginManager().registerEvents(new UpdateChecker(this), this);
 		getServer().getPluginManager().registerEvents(new BossBars(this), this);

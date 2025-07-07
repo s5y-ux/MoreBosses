@@ -6,9 +6,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -22,7 +24,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class OswaldoEvents implements Listener{
-	
+
+	private final Main main;
+
+	public OswaldoEvents(Main main) {
+		this.main = main;
+	}
 	
 	// Helper Methods:
 	//=============================
@@ -43,7 +50,16 @@ public class OswaldoEvents implements Listener{
 		World world = entity.getWorld();
 		world.dropItem(location, item);
 	}
+
+	private void spawnExperienceOrbs(Location location, int totalOrbs, int expPerOrb) {
+    World world = location.getWorld();
+    for (int i = 0; i < totalOrbs; i++) {
+        ExperienceOrb orb = (ExperienceOrb) world.spawn(location, ExperienceOrb.class);
+        orb.setExperience(expPerOrb);
+    }
+}
 	//=============================
+
 	
 	@EventHandler
 	public void onOswaldoDeath(EntityDeathEvent event) {
@@ -53,6 +69,15 @@ public class OswaldoEvents implements Listener{
 			
 			if(isOswaldo) {
 				DropItemAt(oswaldo, CustomItem(Material.NETHERITE_HELMET, ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo\'s Helmet")));
+				spawnExperienceOrbs(event.getEntity().getLocation(), 100, 2);
+
+				if(main.getConfig().getBoolean("AnnounceBossKill")){
+				for(Player player: main.getServer().getOnlinePlayers()) {
+					player.sendMessage(main.getPluginPrefix() + "Oswaldo has been slain!");
+					player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 0);
+
+				}
+			}
 			}
 			
 		} catch (Exception e) {
