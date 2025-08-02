@@ -90,9 +90,6 @@ public class EggEvents implements Listener {
                 spawnEffect(loc, world);
                 event.setHatching(false);
                 break;
-            default:
-                player.sendMessage(main.getPluginPrefix() + "Unknown boss egg!");
-                break;
         }
     }
 }
