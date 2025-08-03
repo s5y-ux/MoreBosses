@@ -1,5 +1,10 @@
 package net.ddns.vcccd;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -25,6 +30,27 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		
 		FileConfiguration config = this.getConfig();
+
+		File schemFolder = new File(getDataFolder(), "structures");
+		if (!schemFolder.exists()) {
+			schemFolder.mkdirs();
+			File outFile = new File(schemFolder, "GeneratedTower.schem");
+			if(!outFile.exists()){
+				try {
+					InputStream in = getResource("structures/GeneratedTower.schem");
+					OutputStream out = new FileOutputStream(outFile);
+
+					byte[] buffer = new byte[1024];
+					int len;
+					while ((len = in.read(buffer)) > 0) {
+						out.write(buffer, 0, len);
+					}
+
+				} catch (Exception e) {
+					getConsole().sendMessage(getPluginPrefix() + ChatColor.RED + "File cannot be created... Please report this issue!");
+				}
+			}
+		}
 		
 		config.addDefault("OswaldoHealth", 300);
 		config.addDefault("BigBoyHealth", 300);
@@ -87,6 +113,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new BossBars(this), this);
 		getServer().getPluginManager().registerEvents(new TimeStoneEvents(this), this);
 		getServer().getPluginManager().registerEvents(new EggEvents(this), this);
+		getServer().getPluginManager().registerEvents(new GenerateStructures(this), this);
 		
 		console.sendMessage(getPluginPrefix() + "The MoreBosses Plugin has beed Loaded...");
 		console.sendMessage(getPluginPrefix() + "Please note that this does not mean all features will work");
