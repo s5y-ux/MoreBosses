@@ -23,11 +23,10 @@ public class OswaldoHelmetEvents implements Listener{
 	
 	@EventHandler
 	public void onAttackWithOswaldosHelmet(EntityDamageByEntityEvent event) {
+		try{
 		if(event.getEntity() instanceof Player) {
 			Player user = (Player) event.getEntity();
-			if(user.getInventory().getHelmet() == null) {
-				assert true;
-			} else if(user.getInventory().getHelmet().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo\'s Helmet"))) {
+			if(user.getInventory().getHelmet().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo\'s Helmet"))) {
 				if(RNG(3) == 2) {
 				Entity ReferenceEntity = event.getEntity();
 				
@@ -51,6 +50,9 @@ public class OswaldoHelmetEvents implements Listener{
                 }
 			}
 			}
+		}
+	} catch (Exception e) {
+			
 		}
 	}
 
