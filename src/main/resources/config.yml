@@ -5,7 +5,7 @@ SpawnInWorld: false
 Worlds: world,city
 
 # The radius in blocks for the /despawnentities command
-despawn-radius: 500
+despawn-radius: 300
 
 # The higher the number, the less of a chance for a boss to spawn in the world
 SpawnRNG: 500
@@ -49,13 +49,14 @@ GortHealth: 300
 DrStrangeHealth: 300
 
 # DrStrange Handling
-TeleportAllowedRadius:
-  x: 15
+TeleportAllowedRadius: #changes how far x you can teleport, how far y you can teleport, how far Z you can teleport
+  x: 15 
   y: 2
   z: 15
 DrStrangeTeleportBlockType: #add minecraft:* to allow all solid blocks
   - minecraft:*
   - minecraft:dirt
+  - minecraft:bedrock
 
 #Time Stone Settings
 radius: 10
@@ -63,4 +64,5 @@ duration: 200
 numParticles: 200
 
 # Announce when a boss is killed
+
 AnnounceBossKill: true
