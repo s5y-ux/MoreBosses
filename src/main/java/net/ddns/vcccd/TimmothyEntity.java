@@ -29,8 +29,13 @@ public class TimmothyEntity {
 
         Skeleton timmothy = (Skeleton) world.spawnEntity(local, EntityType.SKELETON);
         EntityEquipment equipment = timmothy.getEquipment();
-        
-        // TODO: Create an event that cancels the event on the event of an explosion.
+
+        // Read from config.yml (fallback to constructor parameter)
+        double configuredHealth = main.getConfig().getDouble("TimmothyHealth", health);
+
+        // Older Spigot API style
+        timmothy.setMaxHealth(configuredHealth);
+        timmothy.setHealth(configuredHealth);
         
         ItemStack[] skeletonArmor = {
         		createEnchantedItem(Material.DIAMOND_BOOTS, Enchantment.BLAST_PROTECTION, 5),
