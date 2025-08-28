@@ -76,14 +76,9 @@ public class BartholomewListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onBartholomewAttackEvent(EntityDamageByEntityEvent event) {
+	public void Attacked(EntityDamageByEntityEvent event) {
 		if(event.getDamager() instanceof Player) {
 			Player player = (Player) event.getDamager();
-
-			boolean listContainsPlayer = BartholomewPlayers.contains(event.getDamager());
-			if(!listContainsPlayer) {
-				BartholomewPlayers.add((Player) event.getDamager());
-			}
 		if(event.getEntity().getCustomName() == null) {
 			assert true;
 		} else {
@@ -97,13 +92,19 @@ public class BartholomewListener implements Listener {
 				if(RNG(4)==3) {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10, 10));
 				}
-				if(RNG(15)==14) {
-					player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-					player.sendMessage("You have been disarmed...");
-				}
-			}
-		}
-	}
-	}
+                if(RNG(15)==14) {
+                    ItemStack heldItem = player.getInventory().getItemInMainHand();
+                    if (heldItem != null && heldItem.getType() != Material.AIR) {
+                        player.getWorld().dropItemNaturally(player.getLocation(), heldItem);
+                        player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+                        player.sendMessage("You have been disarmed...");
+                    }
+                }
+            }
+        }
+    }
+} 
 
-}
+} 
+
+

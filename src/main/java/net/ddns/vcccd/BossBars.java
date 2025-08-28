@@ -17,96 +17,96 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
+
 public class BossBars implements CommandExecutor, Listener {
-    private BossBar AlbertBar = Bukkit.createBossBar(ChatColor.YELLOW + "Albert", BarColor.YELLOW, BarStyle.SOLID);
-    private BossBar OswaldoBar = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"), BarColor.RED, BarStyle.SOLID);
-    private BossBar BigBoyBar = Bukkit.createBossBar(ChatColor.BOLD + "Big Boy", BarColor.WHITE, BarStyle.SOLID);
-    private BossBar TimmothyBar = Bukkit.createBossBar(ChatColor.AQUA + "Timmothy", BarColor.BLUE, BarStyle.SOLID);
-    private BossBar BartholomewBar = Bukkit.createBossBar(ChatColor.BLACK + "Bartholomew", BarColor.PURPLE, BarStyle.SOLID);
+
     private final Main main;
-    
-    private void displayBar(BossBar Bar, Entity entity, int maxHealth, Player player) {
-        Mob mob = (Mob) entity;
-        Bar.addPlayer(player);
-        Bar.setProgress(mob.getHealth() / maxHealth);
-        Bar.setVisible(true);
-    }
+    private final Map<UUID, BossBar> activeBossBars = new HashMap<>();
 
     public BossBars(Main main) {
-    this.main = main;	
-    }
-    
-    @EventHandler
-    public void EntityDamage(EntityDamageByEntityEvent event) {
-        if (event.getEntity().getCustomName() == null) {
-            assert true;
-        } else {
-        if (event.getDamager() instanceof Player) {
-            Player player = (Player) event.getDamager();
-            FileConfiguration config = main.getConfig();
+        this.main = main;
 
-            if (event.getEntity().getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&eAlbert"))) {
-                displayBar(AlbertBar, event.getEntity(), 16, player);
-
-            } else if (event.getEntity().getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"))) {
-
-                displayBar(OswaldoBar, event.getEntity(), config.getInt("OswaldoHealth"), player);
-
-            } else if (event.getEntity().getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lBig Boy"))) {
-
-                displayBar(BigBoyBar, event.getEntity(), config.getInt("BigBoyHealth"), player);
-
-            } else if (event.getEntity().getCustomName().equals(ChatColor.AQUA + "Timmothy")) {
-                displayBar(TimmothyBar, event.getEntity(), config.getInt("TimmothyHealth"), player);
-
-            } else if (event.getEntity().getCustomName().equals(ChatColor.BLACK + "Bartholomew")) {
-                displayBar(BartholomewBar, event.getEntity(), config.getInt("BartholomewHealth"), player);
-
+        // Watchdog: cleanup dead/removed bosses every second
+        Bukkit.getScheduler().runTaskTimer(main, () -> {
+            Iterator<Map.Entry<UUID, BossBar>> it = activeBossBars.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<UUID, BossBar> entry = it.next();
+                Entity e = Bukkit.getEntity(entry.getKey());
+                if (e == null || e.isDead()) {
+                    entry.getValue().removeAll();
+                    it.remove();
+                }
             }
+        }, 0L, 20L); // 20 ticks = 1 second
+    }
+
+    private void displayBar(Entity entity, double maxHealth, Player player, BarColor color) {
+        BossBar bar = activeBossBars.computeIfAbsent(entity.getUniqueId(), id ->
+                Bukkit.createBossBar(entity.getCustomName(), color, BarStyle.SOLID)
+        );
+
+        double progress = ((Mob) entity).getHealth() / maxHealth;
+        bar.setProgress(Math.max(0.0, Math.min(1.0, progress)));
+        bar.setVisible(true);
+        if (!bar.getPlayers().contains(player)) {
+            bar.addPlayer(player);
         }
     }
-    }
 
-    private void disableBar(BossBar Bar) {
-        Bar.setProgress(0);
-        Bar.setVisible(false);
-        Bar.removeAll();
+@EventHandler
+public void onEntityDamage(EntityDamageByEntityEvent event) {
+    if (!(event.getDamager() instanceof Player)) return;
+    if (!(event.getEntity() instanceof Mob)) return;
+    if (event.getEntity().getCustomName() == null) return;
+
+    Player player = (Player) event.getDamager();
+    FileConfiguration config = main.getConfig();
+    String name = event.getEntity().getCustomName();
+
+    if (name.equals(ChatColor.translateAlternateColorCodes('&', "&eAlbert"))) {
+        displayBar(event.getEntity(), config.getDouble("AlbertHealth", 16), player, BarColor.YELLOW);
+
+    } else if (name.equals(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"))) {
+        displayBar(event.getEntity(), config.getDouble("OswaldoHealth", 300), player, BarColor.RED);
+
+    } else if (name.equals(ChatColor.translateAlternateColorCodes('&', "&c&lBig Boy"))) {
+        displayBar(event.getEntity(), config.getDouble("BigBoyHealth", 300), player, BarColor.WHITE);
+
+    } else if (name.equals(ChatColor.AQUA + "Timmothy")) {
+        displayBar(event.getEntity(), config.getDouble("TimmothyHealth", 300), player, BarColor.BLUE);
+
+    } else if (name.equals(ChatColor.BLACK + "Bartholomew")) {
+        displayBar(event.getEntity(), config.getDouble("BartholomewHealth", 300), player, BarColor.PURPLE);
+
+    } else if (name.equals(ChatColor.translateAlternateColorCodes('&', "&c&lPiGgY"))) {
+        displayBar(event.getEntity(), config.getDouble("PiggyHealth", 300), player, BarColor.PINK);
+
+    } else if (name.equals(ChatColor.DARK_PURPLE + "Dr. Strange")) {
+        displayBar(event.getEntity(), config.getDouble("DrStrangeHealth", 300), player, BarColor.PURPLE);
     }
+}
 
     @EventHandler
-    public void OnEntityDeath(EntityDeathEvent event) {
-        if (event.getEntity().getCustomName() == null) {
-            assert true;
-        } else if (event.getEntity().getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&eAlbert"))) {
-            disableBar(AlbertBar);
-        } else if (event.getEntity().getCustomName().equals(ChatColor.translateAlternateColorCodes('&', "&c&lOswaldo"))) {
-            disableBar(OswaldoBar);
-        } else if (event.getEntity().getCustomName().equals(ChatColor.BOLD + "Big Boy")) {
-            disableBar(BigBoyBar);
-        } else if (event.getEntity().getCustomName().equals(ChatColor.AQUA + "Timmothy")) {
-            disableBar(TimmothyBar);
-        } else if (event.getEntity().getCustomName().equals(ChatColor.BLACK + "Bartholomew")) {
-            disableBar(BartholomewBar);
+    public void onEntityDeath(EntityDeathEvent event) {
+        BossBar bar = activeBossBars.remove(event.getEntity().getUniqueId());
+        if (bar != null) {
+            bar.removeAll();
         }
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            Player player = (Player) sender;
-            BossBar[] BossBars = {
-                AlbertBar,
-                OswaldoBar,
-                BigBoyBar,
-                TimmothyBar,
-                BartholomewBar
-            };
-            for (BossBar Bar: BossBars) {
-                disableBar(Bar);
+            for (BossBar bar : activeBossBars.values()) {
+                bar.removeAll();
             }
-            player.sendMessage(main.getPluginPrefix() + "All boss bars removed, please re-log.");
+            activeBossBars.clear();
+            sender.sendMessage(main.getPluginPrefix() + "All boss bars removed.");
         }
-        return (true);
+        return true;
     }
-
 }
