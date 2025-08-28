@@ -32,6 +32,7 @@
 /removebars          # Removes boss bars
 /spawnboss           # Spawns a boss
 /despawnentities     # Despawns all entities in a 500 block radius
+/bossegg {boss}      # Give player a spawn egg of the specified boss
 ```
 
 ## 🔒 Permissions
@@ -43,6 +44,7 @@ morebosses.removebars        # Remove all boss bars
 morebosses.adminsword        # Use the Admin Sword
 morebosses.spawncommand      # Use /spawnboss
 morebosses.despawncommand    # Use /despawnentities
+morebosses.bossegg           # Use /bossegg
 ```
 
 ## ⚙️ Installation
