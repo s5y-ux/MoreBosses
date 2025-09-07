@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,6 +42,17 @@ public class GenerateStructures implements Listener {
         this.plugin = plugin;
     }
 
+    public boolean allBlocksNotAir(Chunk chunk) {
+        for(int i = 0; i < 12; i++){
+            for(int j = 0; j < 12; j++){
+                if(chunk.getBlock(i, chunk.getWorld().getHighestBlockYAt(i, j) - 1, j).getType() == Material.AIR){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
         Chunk chunk = event.getChunk();
@@ -53,21 +66,50 @@ public class GenerateStructures implements Listener {
 
         int pasteX = chunkX << 4;
         int pasteZ = chunkZ << 4;
-        int pasteY = 64;
+        int pasteY = world.getHighestBlockYAt(chunk.getBlock(0, 0, 0).getLocation());
 
         // Delay paste to avoid triggering recursive chunk loads
         new BukkitRunnable() {
             @Override
             public void run() {
-                pasteSchematic(world, pasteX, pasteY, pasteZ);
+                if(allBlocksNotAir(chunk)){
+                    switch(new Random().nextInt(6)){
+                        case 0:
+                            File oswaldoSchematicFile = new File("plugins/MoreBosses/structures/GeneratedTower.schem");
+                            pasteSchematic(world, pasteX, pasteY, pasteZ, oswaldoSchematicFile, () -> new OswaldoEntity(plugin.getConfig().getInt("OswaldoHealth"), new Location(world, pasteX, pasteY, pasteZ), world, plugin));
+                            break;
+                        case 1:
+                            File timmothySchematicFile = new File("plugins/MoreBosses/structures/TimmothyHut.schem");
+                            pasteSchematic(world, pasteX, pasteY, pasteZ, timmothySchematicFile, () -> new TimmothyEntity(plugin.getConfig().getInt("TimmothyHealth"), new Location(world, pasteX, pasteY, pasteZ), world, plugin));
+                            break;
+                        case 2:
+                            File bartholomewSchematicFile = new File("plugins/MoreBosses/structures/BartTower.schem");
+                            pasteSchematic(world, pasteX, pasteY, pasteZ, bartholomewSchematicFile, () -> new BartholomewEntity(plugin.getConfig().getInt("BartholomewHealth"), new Location(world, pasteX, pasteY, pasteZ), world, plugin));
+                            break;
+                        case 3:
+                            File piggySchematicFile = new File("plugins/MoreBosses/structures/PiggyPin.schem");
+                            pasteSchematic(world, pasteX, pasteY, pasteZ, piggySchematicFile, () -> new PiggyEntity(plugin.getConfig().getInt("PiggyHealth"), new Location(world, pasteX, pasteY, pasteZ), world, plugin));
+                            break;
+                        case 4:
+                            File gortSchematicFile = new File("plugins/MoreBosses/structures/GortHouse.schem");
+                            pasteSchematic(world, pasteX, pasteY, pasteZ, gortSchematicFile, () -> new GortEntity(plugin.getConfig().getInt("GortHealth"), new Location(world, pasteX, pasteY, pasteZ), world, plugin));
+                            break;
+                        case 5:
+                            File drStrangeSchematicFile = new File("plugins/MoreBosses/structures/StrangeLibrary.schem");
+                            pasteSchematic(world, pasteX, pasteY, pasteZ, drStrangeSchematicFile, () -> new DrStrangeEntity(plugin.getConfig().getInt("DrStrangeHealth"), new Location(world, pasteX, pasteY, pasteZ), world, plugin));
+                            break;
+                        default:
+                            break;
+                    }
+                    //pasteSchematic(world, pasteX, pasteY, pasteZ);
+                }
             }
         }.runTaskLater(plugin, 1L); // 1 tick later
     }
 
-    
 
-    private void pasteSchematic(World world, int x, int y, int z) {
-        File schematicFile = new File("plugins/MoreBosses/structures/GeneratedTower.schem");
+    private void pasteSchematic(World world, int x, int y, int z, File schematicFile, Supplier<?> bossSpawner) {
+        //File schematicFile = new File("plugins/MoreBosses/structures/GeneratedTower.schem");
 
         ClipboardFormat format = ClipboardFormats.findByFile(schematicFile);
         if (format == null) {
@@ -79,8 +121,9 @@ public class GenerateStructures implements Listener {
             if(new Random().nextInt(800) == 1) {
                 Clipboard clipboard = reader.read();
                 
-                Location spawnLocation = new Location(world, x, y, z);
-                new OswaldoEntity(plugin.getConfig().getInt("OswaldoHealth"), spawnLocation, world, plugin);
+                Location spawnLocation = new Location(world, x, y + 2, z);
+                bossSpawner.get();
+                //new OswaldoEntity(plugin.getConfig().getInt("OswaldoHealth"), spawnLocation, world, plugin);
                 plugin.getConsole().sendMessage("Spawned Boss");
                 
                 EditSession editSession = WorldEdit.getInstance()
@@ -90,7 +133,7 @@ public class GenerateStructures implements Listener {
 
                 Operation operation = new ClipboardHolder(clipboard)
                         .createPaste(editSession)
-                        .to(BlockVector3.at(x, y, z))
+                        .to(BlockVector3.at(x, y + 2, z))
                         .ignoreAirBlocks(false)
                         .build();
 

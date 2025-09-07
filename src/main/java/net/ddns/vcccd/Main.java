@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -34,11 +35,18 @@ public class Main extends JavaPlugin {
 		File schemFolder = new File(getDataFolder(), "structures");
 		if (!schemFolder.exists()) {
 			schemFolder.mkdirs();
-			File outFile = new File(schemFolder, "GeneratedTower.schem");
-			if(!outFile.exists()){
+			ArrayList<File> outFile = new ArrayList<>();
+
+			String[] structures = {"GeneratedTower.schem", "GortHouse.schem", "PiggyPin.schem", "StrangeLibrary.schem", "TimmothyHut.schem", "BartTower.schem"};
+			for(String value: structures){
+				outFile.add(new File(schemFolder, value));	
+			}
+
+			for(int i = 0; i < outFile.size(); i++){
+				if(!outFile.get(i).exists()){
 				try {
-					InputStream in = getResource("structures/GeneratedTower.schem");
-					OutputStream out = new FileOutputStream(outFile);
+					InputStream in = getResource("structures/" + structures[i]);
+					OutputStream out = new FileOutputStream(outFile.get(i));
 
 					byte[] buffer = new byte[1024];
 					int len;
@@ -49,6 +57,7 @@ public class Main extends JavaPlugin {
 				} catch (Exception e) {
 					getConsole().sendMessage(getPluginPrefix() + ChatColor.RED + "File cannot be created... Please report this issue!");
 				}
+			}
 			}
 		}
 		
