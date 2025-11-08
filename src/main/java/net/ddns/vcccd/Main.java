@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -29,16 +32,27 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		
+		// Everything to the ==== at the bottom needs to be redone for readabillity.
+		//TODO
+		//=================================================================================================================
+
 		FileConfiguration config = this.getConfig();
 
 		File schemFolder = new File(getDataFolder(), "structures");
 		if (!schemFolder.exists()) {
 			schemFolder.mkdirs();
-			File outFile = new File(schemFolder, "GeneratedTower.schem");
-			if(!outFile.exists()){
+			ArrayList<File> outFile = new ArrayList<>();
+
+			String[] structures = {"GeneratedTower.schem", "GortHouse.schem", "PiggyPin.schem", "StrangeLibrary.schem", "TimmothyHut.schem", "BartTower.schem"};
+			for(String value: structures){
+				outFile.add(new File(schemFolder, value));	
+			}
+
+			for(int i = 0; i < outFile.size(); i++){
+				if(!outFile.get(i).exists()){
 				try {
-					InputStream in = getResource("structures/GeneratedTower.schem");
-					OutputStream out = new FileOutputStream(outFile);
+					InputStream in = getResource("structures/" + structures[i]);
+					OutputStream out = new FileOutputStream(outFile.get(i));
 
 					byte[] buffer = new byte[1024];
 					int len;
@@ -50,7 +64,10 @@ public class Main extends JavaPlugin {
 					getConsole().sendMessage(getPluginPrefix() + ChatColor.RED + "File cannot be created... Please report this issue!");
 				}
 			}
+			}
 		}
+
+		//=================================================================================================================
 		
 		config.addDefault("OswaldoHealth", 300);
 		config.addDefault("BigBoyHealth", 300);
@@ -60,6 +77,7 @@ public class Main extends JavaPlugin {
 		config.addDefault("PiggyHealth", 300);
 		config.addDefault("GortHealth", 300);
 		config.addDefault("DrStrangeHealth",  300);
+		config.addDefault("SpawnFrequency", 3);
 		config.addDefault("SpawnInWorld", false);
 		config.addDefault("AnnounceBossKill", true);
 		
@@ -125,6 +143,7 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		
+		Bukkit.getScheduler().cancelTasks(this);
+		HandlerList.unregisterAll(this);
 	}
 }

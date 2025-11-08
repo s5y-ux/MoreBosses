@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class UpdateChecker implements Listener {
 	
-	private String GameVersion = "2.1.2";
+	private String GameVersion = "2.1.4";
 	private String Version = constructData();
 	private final Main main;
 	

@@ -4,6 +4,9 @@ SpawnInWorld: false
 # Worlds to spawn in (must be separated by commas and no spaces)
 Worlds: world,city
 
+# The radius in blocks for the /despawnentities command
+despawn-radius: 300
+
 # The higher the number, the less of a chance for a boss to spawn in the world
 SpawnRNG: 500
 
@@ -25,6 +28,17 @@ PiggyDeSpawn: true
 GortDeSpawn: true
 DrStrangeDeSpawn: true
 
+#ItemConfig
+GortCobwebDecayTime: 5 # Seconds before cobweb decay, 0 for permanent
+bombowexplosion:
+  grief: true
+  power: 4.0 #explosion size of arrow
+bigboytrident:
+  exp-cost: 3
+  explosion-power: 5
+  grief: true
+
+
 # Sets the health of the different bosses
 OswaldoHealth: 300
 BigBoyHealth: 300
@@ -34,6 +48,16 @@ PiggyHealth: 300
 GortHealth: 300
 DrStrangeHealth: 300
 
+# DrStrange Handling
+TeleportAllowedRadius: #changes how far x you can teleport, how far y you can teleport, how far Z you can teleport
+  x: 15 
+  y: 2
+  z: 15
+DrStrangeTeleportBlockType: #add minecraft:* to allow all solid blocks
+  - minecraft:*
+  - minecraft:dirt
+  - minecraft:bedrock
+
 #Time Stone Settings
 radius: 10
 duration: 200
@@ -41,3 +65,6 @@ numParticles: 200
 
 # Announce when a boss is killed
 AnnounceBossKill: true
+
+# How often the bosses spawn on a scale from 1 to 8 (1 being often, 8 being rarely)
+SpawnFrequency: 3
