@@ -6,9 +6,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -30,6 +32,10 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		
+		// Everything to the ==== at the bottom needs to be redone for readabillity.
+		//TODO
+		//=================================================================================================================
+
 		FileConfiguration config = this.getConfig();
 
 		File schemFolder = new File(getDataFolder(), "structures");
@@ -60,6 +66,8 @@ public class Main extends JavaPlugin {
 			}
 			}
 		}
+
+		//=================================================================================================================
 		
 		config.addDefault("OswaldoHealth", 300);
 		config.addDefault("BigBoyHealth", 300);
@@ -69,6 +77,7 @@ public class Main extends JavaPlugin {
 		config.addDefault("PiggyHealth", 300);
 		config.addDefault("GortHealth", 300);
 		config.addDefault("DrStrangeHealth",  300);
+		config.addDefault("SpawnFrequency", 3);
 		config.addDefault("SpawnInWorld", false);
 		config.addDefault("AnnounceBossKill", true);
 		
@@ -134,6 +143,7 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		
+		Bukkit.getScheduler().cancelTasks(this);
+		HandlerList.unregisterAll(this);
 	}
 }

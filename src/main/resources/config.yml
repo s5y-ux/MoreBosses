@@ -64,5 +64,7 @@ duration: 200
 numParticles: 200
 
 # Announce when a boss is killed
-
 AnnounceBossKill: true
+
+# How often the bosses spawn on a scale from 1 to 8 (1 being often, 8 being rarely)
+SpawnFrequency: 3
