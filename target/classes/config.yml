@@ -8,7 +8,7 @@ Worlds: world,city
 despawn-radius: 300
 
 # The higher the number, the less of a chance for a boss to spawn in the world
-SpawnRNG: 500
+SpawnRNG: 50
 
 # Options for which bosses spawn in the world (MUST SET SpawnInWorld TO TRUE!)
 OswaldoSpawn: true
@@ -68,3 +68,6 @@ AnnounceBossKill: true
 
 # How often the bosses spawn on a scale from 1 to 8 (1 being often, 8 being rarely)
 SpawnFrequency: 3
+
+# Enable or disable custom structures for bosses
+EnableStructures: false

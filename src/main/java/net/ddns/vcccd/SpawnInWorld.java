@@ -21,7 +21,7 @@ public class SpawnInWorld implements Listener {
 	}
 	
 	private int RNG(int scope) {
-        return (new Random().nextInt(28 + scope));
+        return (new Random().nextInt(7 + scope));
     }
 	
 	@EventHandler
@@ -52,7 +52,7 @@ public class SpawnInWorld implements Listener {
 			        	break;
 			        case 3:
 			        	if(this.config.getBoolean("TimmothySpawn")) {
-			        		new TimmothyEntity(this.config.getInt("TimmothySpawn"), spawnLocation, chunkWorld, main);
+			        		new TimmothyEntity(this.config.getInt("TimmothyHealth"), spawnLocation, chunkWorld, main);
 			        	}
 			        	break;
 			        case 4:

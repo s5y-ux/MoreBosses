@@ -92,7 +92,7 @@ public class GenerateStructures implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if(allBlocksNotAir(chunk)){
+                if(allBlocksNotAir(chunk) && plugin.getConfig().getBoolean("EnableStructures")) {
                     switch(new Random().nextInt(6)){
                         case 0:
                             File oswaldoSchematicFile = new File("plugins/MoreBosses/structures/GeneratedTower.schem");

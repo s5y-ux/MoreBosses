@@ -73,7 +73,7 @@ public class Main extends JavaPlugin {
 		config.addDefault("BigBoyHealth", 300);
 		config.addDefault("TimmothyHealth", 300);
 		config.addDefault("BartholomewHealth", 300);
-		config.addDefault("SpawnRNG", 500);
+		config.addDefault("SpawnRNG", 50);
 		config.addDefault("PiggyHealth", 300);
 		config.addDefault("GortHealth", 300);
 		config.addDefault("DrStrangeHealth",  300);
@@ -96,6 +96,7 @@ public class Main extends JavaPlugin {
 		config.addDefault("PiggyDeSpawn", true);
 		config.addDefault("GortDeSpawn", true);
 		config.addDefault("DrStrangeDeSpawn", true);
+		config.addDefault("EnableStructures", false);
 		
 		config.addDefault("Worlds", "world,city");
 		
