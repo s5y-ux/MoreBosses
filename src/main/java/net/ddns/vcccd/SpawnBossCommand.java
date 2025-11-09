@@ -24,7 +24,8 @@ public class SpawnBossCommand implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length < 1) {
-            sender.sendMessage(main.getPluginPrefix() + "Usage: /spawnboss <boss> [player|x y z]");
+            sender.sendMessage(main.getPluginPrefix() + "Usage: /spawnboss <boss> [world] [x y z]");
+            sender.sendMessage(main.getPluginPrefix() + "Usage (Player): /spawnboss <boss> [x y z]");
             return true;
         }
 
@@ -32,48 +33,57 @@ public class SpawnBossCommand implements CommandExecutor, Listener {
         Location spawnLocation = null;
         World world = null;
 
-        if (args.length == 1) {
-            // /spawnboss {boss} (at executor's location if they're a player)
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(main.getPluginPrefix() + "Only players can use this command without a target.");
+        //  Universal Command: /spawnboss {boss} {world} {x} {y} {z}
+        if (args.length == 5) {
+
+            String worldName = args[1];
+            world = Bukkit.getWorld(worldName);
+
+            if (world == null) {
+                sender.sendMessage(main.getPluginPrefix() + "World '" + worldName + "' not found.");
                 return true;
             }
-            Player player = (Player) sender;
-            spawnLocation = player.getLocation();
-            world = player.getWorld();
-
-        } else if (args.length == 2) {
-            // /spawnboss {boss} {player}
-            Player target = Bukkit.getPlayer(args[1]);
-            if (target == null) {
-                sender.sendMessage(main.getPluginPrefix() + "Player not found.");
-                return true;
-            }
-            spawnLocation = target.getLocation();
-            world = target.getWorld();
-
-        } else if (args.length == 4) {
-            // /spawnboss {boss} {x} {y} {z}
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(main.getPluginPrefix() + "Only players can run this with coordinates.");
-                return true;
-            }
-
-            Player player = (Player) sender;
-            world = player.getWorld();
 
             try {
-                double x = Double.parseDouble(args[1]);
-                double y = Double.parseDouble(args[2]);
-                double z = Double.parseDouble(args[3]);
+                double x = Double.parseDouble(args[2]);
+                double y = Double.parseDouble(args[3]);
+                double z = Double.parseDouble(args[4]);
                 spawnLocation = new Location(world, x, y, z);
             } catch (NumberFormatException e) {
-                sender.sendMessage(main.getPluginPrefix() + "Invalid coordinates.");
+                sender.sendMessage(main.getPluginPrefix() + "Invalid coordinates. Usage: /spawnboss <boss> <world> <x> <y> <z>");
+                return true;
+            }
+
+
+        } else if (sender instanceof Player) {
+
+            Player player = (Player) sender;
+            world = player.getWorld();
+
+            if (args.length == 1) {
+                // /spawnboss {boss} (Spawn at player's location)
+                spawnLocation = player.getLocation();
+
+            } else if (args.length == 4) {
+                // /spawnboss {boss} {x} {y} {z}
+                try {
+                    double x = Double.parseDouble(args[1]);
+                    double y = Double.parseDouble(args[2]);
+                    double z = Double.parseDouble(args[3]);
+                    spawnLocation = new Location(world, x, y, z);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(main.getPluginPrefix() + "Invalid coordinates.");
+                    return true;
+                }
+
+            } else {
+                sender.sendMessage(main.getPluginPrefix() + "Usage: /spawnboss <boss> [x y z]");
                 return true;
             }
 
         } else {
-            sender.sendMessage(main.getPluginPrefix() + "Usage: /spawnboss <boss> [player|x y z]");
+            // --- Console Restriction ---
+            sender.sendMessage(main.getPluginPrefix() + "Console must use: /spawnboss <boss> <world> <x> <y> <z>");
             return true;
         }
 
