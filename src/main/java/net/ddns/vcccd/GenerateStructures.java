@@ -75,6 +75,11 @@ public class GenerateStructures implements Listener {
 
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
+        // Check config to see if structure generation is enabled
+        if (!plugin.getConfig().getBoolean("GenerateStructures", true)) {
+            return;
+        }
+
         Chunk chunk = event.getChunk();
         World world = chunk.getWorld();
         int chunkX = chunk.getX();
@@ -130,57 +135,57 @@ public class GenerateStructures implements Listener {
 
     private void pasteSchematic(World world, int x, int y, int z, File schematicFile, Supplier<?> bossSpawner) {
 
-    ClipboardFormat format = ClipboardFormats.findByFile(schematicFile);
-    if (format == null) {
-        Bukkit.getLogger().warning("Unsupported schematic format.");
-        return;
-    }
-
-    try (ClipboardReader reader = format.getReader(new FileInputStream(schematicFile))) {
-
-        if (new Random().nextInt(plugin.getConfig().getInt("SpawnFrequency") * 100) == 1) {
-
-            Clipboard clipboard = reader.read();
-
-            plugin.getConsole().sendMessage("Attempting to paste schematic at " + x + ", " + (y + 1) + ", " + z);
-
-            EditSession editSession = WorldEdit.getInstance()
-                    .newEditSessionBuilder()
-                    .world(BukkitAdapter.adapt(world))
-                    .build();
-
-            Operation operation = new ClipboardHolder(clipboard)
-                    .createPaste(editSession)
-                    .to(BlockVector3.at(x, y + 1, z))
-                    .ignoreAirBlocks(false)
-                    .build();
-
-            Operations.complete(operation);
-            editSession.flushSession();
-
-            plugin.getConsole().sendMessage("Building pasted.");
-
-            // Delay boss spawn to allow world to stabilize after paste
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    try {
-                        bossSpawner.get();
-                        plugin.getConsole().sendMessage("Boss spawned at " + x + ", " + (y + 2) + ", " + z);
-                    } catch (Exception ex) {
-                        plugin.getConsole().sendMessage("Boss spawn failed: " + ex.getMessage());
-                        ex.printStackTrace();
-                    }
-                }
-            }.runTaskLater(plugin, 10L);
-
+        ClipboardFormat format = ClipboardFormats.findByFile(schematicFile);
+        if (format == null) {
+            Bukkit.getLogger().warning("Unsupported schematic format.");
+            return;
         }
 
-    } catch (IOException | WorldEditException e) {
-        e.printStackTrace();
+        try (ClipboardReader reader = format.getReader(new FileInputStream(schematicFile))) {
+
+            if (new Random().nextInt(plugin.getConfig().getInt("SpawnFrequency") * 100) == 1) {
+
+                Clipboard clipboard = reader.read();
+
+                plugin.getConsole().sendMessage("Attempting to paste schematic at " + x + ", " + (y + 1) + ", " + z);
+
+                EditSession editSession = WorldEdit.getInstance()
+                        .newEditSessionBuilder()
+                        .world(BukkitAdapter.adapt(world))
+                        .build();
+
+                Operation operation = new ClipboardHolder(clipboard)
+                        .createPaste(editSession)
+                        .to(BlockVector3.at(x, y + 1, z))
+                        .ignoreAirBlocks(false)
+                        .build();
+
+                Operations.complete(operation);
+                editSession.flushSession();
+
+                plugin.getConsole().sendMessage("Building pasted.");
+
+                // Delay boss spawn to allow world to stabilize after paste
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            bossSpawner.get();
+                            plugin.getConsole().sendMessage("Boss spawned at " + x + ", " + (y + 2) + ", " + z);
+                        } catch (Exception ex) {
+                            plugin.getConsole().sendMessage("Boss spawn failed: " + ex.getMessage());
+                            ex.printStackTrace();
+                        }
+                    }
+                }.runTaskLater(plugin, 10L);
+
+            }
+
+        } catch (IOException | WorldEditException e) {
+            e.printStackTrace();
+        }
     }
-}
 
 
-    
+
 }
