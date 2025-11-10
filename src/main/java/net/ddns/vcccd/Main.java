@@ -79,6 +79,7 @@ public class Main extends JavaPlugin {
         config.addDefault("DrStrangeHealth",  300);
         config.addDefault("SpawnFrequency", 3);
         config.addDefault("SpawnInWorld", false);
+        config.addDefault("GenerateStructures", true); // <-- Added new default
         config.addDefault("AnnounceBossKill", true);
 
         config.addDefault("OswaldoSpawn", true);
